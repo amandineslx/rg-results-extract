@@ -39,18 +39,19 @@ def write_results(results_json):
     event_id = results_json['event_id']
     file_name = f"results_{event_id}.csv"
 
-    with open(file_name, 'w') as f:
+    with open(file_name, 'w', encoding='cp1252') as f:
         writer = csv.writer(f)
         first_gymnast_total = 0
         previous_gymnast_total = 0
         for category in results_json['categories'].keys():
             writer.writerow(get_csv_line())
             category_json = results_json['categories'][category]
-            apparatuses = category_json['1'][0]['apparatuses'].keys()
+            first_gymnast = category_json[0][0]
+            apparatuses = first_gymnast['apparatuses'].keys()
             for apparatus in apparatuses:
-                for rank in category_json.keys():
-                    gymnasts = category_json[rank]
-                    if rank == '1':
+                previous_gymnast_total = -1
+                for gymnasts in category_json:
+                    if previous_gymnast_total == -1:
                         first_gymnast_total = get_gymnast_total(gymnasts[0])
                         previous_gymnast_total = first_gymnast_total
                     for gymnast in gymnasts:

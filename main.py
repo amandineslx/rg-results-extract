@@ -1,5 +1,3 @@
-import csv, json, requests
-
 from extraction import get_results_events
 from merging import get_vertical_ranking
 from writing import write_results
@@ -16,4 +14,4 @@ def generate_results_file(event_ids):
     write_results(vertical_ranking)
     print("Finished!")
 
-generate_results_file(EVENT_IDS['sollies_2022'])
+generate_results_file(EVENT_IDS['vitrolles_2022'])

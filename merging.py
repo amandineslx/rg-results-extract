@@ -1,5 +1,3 @@
-import collections
-
 def get_vertical_ranking(events_results):
     if len(events_results) == 1:
         return events_results[0]
@@ -22,58 +20,62 @@ def merge_events(event1, event2):
     categories = set(event1.get('categories', {}).keys()).union(set(event2.get('categories', {}).keys()))
 
     for category in categories:
-        merge['categories'][category] = merge_categories(event1, event1.get('categories', {}).get(category, None), event2, event2.get('categories', {}).get(category, None))
+        category1 = event1.get('categories', {}).get(category, [])
+        category2 = event2.get('categories', {}).get(category, [])
+        merge['categories'][category] = merge_categories(event1, category1, event2, category2)
 
     return merge
 
 def merge_categories(event1, category1, event2, category2):
     if not category1 and not category2:
-        return {}
+        return []
     if not category1:
         return category2
     if not category2:
         return category1
 
-    category = dict()
+    category = []
 
-    i_cat1 = 1
-    i_cat2 = 1
-    i_cat = 1
+    i_cat1 = 0
+    i_cat2 = 0
 
-    while i_cat1 <= len(category1)+1 and i_cat2 <= len(category2)+1:
-        gymnasts1 = category1.get(str(i_cat1), None)
-        if gymnasts1:
-            # TODO map method in array
-            for gymnast in gymnasts1:
-                gymnast['event_id'] = event1['event_id']
-                gymnast['event_label'] = event1['event_label']
-        gymnasts2 = category2.get(str(i_cat2), None)
-        if gymnasts2:
-            for gymnast in gymnasts2:
-                gymnast['event_id'] = event2['event_id']
-                gymnast['event_label'] = event2['event_label']
+    while i_cat1 < len(category1) and i_cat2 < len(category2):
+        gymnasts1 = category1[i_cat1]
+        for gymnast in gymnasts1:
+            gymnast['event_id'] = event1['event_id']
+            gymnast['event_label'] = event1['event_label']
+        gymnasts2 = category2[i_cat2]
+        for gymnast in gymnasts2:
+            gymnast['event_id'] = event2['event_id']
+            gymnast['event_label'] = event2['event_label']
 
-        comparison = compare_gymnasts(gymnasts1, gymnasts2)
+        comparison = compare_gymnasts_lists(gymnasts1, gymnasts2)
         if comparison == 0:
+            gymnasts = gymnasts1 + gymnasts2
+            category.append(gymnasts)
             i_cat1+=1
             i_cat2+=1
         elif comparison < 0:
-            category[str(i_cat)] = gymnasts1
+            category.append(gymnasts1)
             i_cat1+=1
-            i_cat+=1
-        else:
-            category[str(i_cat)] = gymnasts2
+        elif comparison > 0:
+            category.append(gymnasts2)
             i_cat2+=1
-            i_cat+=1
+    while i_cat1 < len(category1):
+        category.append(category1[i_cat1])
+        i_cat1+=1
+    while i_cat2 < len(category2):
+        category.append(category2[i_cat2])
+        i_cat2+=1
 
     return category
 
-def compare_gymnasts(gymnasts1, gymnasts2):
+def compare_gymnasts_lists(gymnasts1, gymnasts2):
     # TODO there is an issue with sollies results
     gymnast1 = gymnasts1[0] if gymnasts1 else None
     gymnast2 = gymnasts2[0] if gymnasts2 else None
     if not gymnast1 and not gymnast2:
-        return 0
+        raise Exception("Both gymnasts to be compared are None")
     if not gymnast1:
         return 1
     if not gymnast2:
@@ -84,19 +86,7 @@ def compare_gymnasts(gymnasts1, gymnasts2):
 
     if gym1_total > gym2_total:
         return -1
-    if gym1_total < gym2_total:
+    elif gym1_total < gym2_total:
         return 1
-    if gym1_total == gym2_total:
-        gym1_exe = 0
-        gym2_exe = 0
-
-        for apparatus in gymnast1['apparatuses'].keys():
-            gym1_exe += gymnast1['apparatuses'][apparatus]['E']
-
-        for apparatus in gymnast2['apparatuses'].keys():
-            gym2_exe += gymnast2['apparatuses'][apparatus]['E']
-
-        if gym1_exe >= gym2_exe:
-            return -1
-        else:
-            return 1
+    else:
+        return 0

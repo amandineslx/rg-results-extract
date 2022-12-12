@@ -51,12 +51,19 @@ def get_results_gymnast(gymnast):
 
 def get_results_category(category):
     # takes as input the category
-    results_category = dict()
+    results_category = []
+
+    previous_gymnast_rank = 1
+    gymnasts_for_rank = []
 
     for gymnast in category['entities']:
-        if str(gymnast['markRank']) not in results_category:
-            results_category[str(gymnast['markRank'])] = []
-        results_category[str(gymnast['markRank'])].append(get_results_gymnast(gymnast))
+        if gymnast['markRank'] == previous_gymnast_rank:
+            gymnasts_for_rank.append(get_results_gymnast(gymnast))
+        else:
+            results_category.append(gymnasts_for_rank)
+            gymnasts_for_rank = [get_results_gymnast(gymnast)]
+            previous_gymnast_rank = gymnast['markRank']
+    results_category.append(gymnasts_for_rank)
 
     return results_category
 
