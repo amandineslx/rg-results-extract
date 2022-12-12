@@ -1,8 +1,10 @@
 import requests
 import json
+import csv
 
-EVENTS = ['13579', '13580']
+EVENTS = ['14130']
 URL_RESULTATS = "https://resultats.ffgym.fr/api/palmares/evenement/"
+SCMS = 'SPORTING CLUB MOUANS SARTOUX GYMNASTIQUE RYTHMIQUE'
 
 MARK_TYPES = {'DB': 'DB', 'DA': 'DA', 'Art.': 'A', 'Exé.': 'E', 'Pén.': 'P'}
 
@@ -13,6 +15,9 @@ def get_results_event_json(event_id):
     return json[0]
 
 def get_vertical_ranking(event_ids):
+    if len(event_ids) == 1:
+        return get_results_event(get_results_event_json(event_ids[0]))
+
     event_results = []
 
     for event_id in EVENTS:
@@ -28,7 +33,7 @@ def get_vertical_ranking(event_ids):
 def merge_events(event1, event2):
     merge = dict()
 
-    merge['event_id'] = 0
+    merge['event_id'] = '-'.join([event1, event2])
     merge['event_label'] = f"Classement vertical events [{','.join(EVENTS)}]"
 
     merge['categories'] = dict()
@@ -63,23 +68,25 @@ def merge_categories(event1, category1, event2, category2):
         if gymnast2:
             gymnast2['event_id'] = event2['event_id']
             gymnast2['event_label'] = event2['event_label']
-        
-        comparison = compare_gymnasts(gymnast1, gymnast2)
+
+        comparison = compare_gymnasts(gymnasts1, gymnasts2)
         if comparison == 0:
             i_cat1+=1
             i_cat2+=1
         elif comparison < 0:
-            category[str(i_cat)] = gymnast1
+            category[str(i_cat)] = gymnasts1
             i_cat1+=1
             i_cat+=1
         else:
-            category[str(i_cat)] = gymnast2
+            category[str(i_cat)] = gymnasts2
             i_cat2+=1
             i_cat+=1
 
     return category
 
-def compare_gymnasts(gymnast1, gymnast2):
+def compare_gymnasts(gymnasts1, gymnasts2):
+    gymnast1 = gymnasts1[0]
+    gymnast2 = gymnasts2[0]
     if not gymnast1 and not gymnast2:
         return 0
     if not gymnast1:
@@ -129,7 +136,9 @@ def get_results_category(category):
     results_category = dict()
 
     for gymnast in category['entities']:
-        results_category[str(gymnast['markRank'])] = get_results_gymnast(gymnast)
+        if str(gymnast['markRank']) not in results_category:
+            results_category[str(gymnast['markRank'])] = []
+        results_category[str(gymnast['markRank'])].append(get_results_gymnast(gymnast))
 
     return results_category
 
@@ -171,6 +180,66 @@ def get_mark_type_label(mark_type):
 def format_mark(mark):
     return float(mark)
 
+def get_apparatus_list(gymnast_json):
+    return list(gymnast_json['apparatuses'].keys())
+
+def get_csv_line_from_gymnast_json(gymnast_json, category, apparatus, first_gymnast_total, previous_gymnast_total):
+    apparatus_json = gymnast_json['apparatuses'][apparatus]
+    # TODO handle multiple apparatuses
+    return get_csv_line(
+        category=category,
+        rank=gymnast_json['rank'],
+        last_name=gymnast_json['last_name'],
+        first_name=gymnast_json['first_name'],
+        club=gymnast_json['club'],
+        scms='x' if gymnast_json['club'] == SCMS else '',
+        db=apparatus_json['DB'],
+        da=apparatus_json.get('DA', ''),
+        artistry=apparatus_json['A'],
+        execution=apparatus_json['E'],
+        penalty=apparatus_json['P'],
+        total=apparatus_json['total'],
+        diff_total=round(apparatus_json['total']-previous_gymnast_total, 3),
+        diff_total_cumul=round(apparatus_json['total']-first_gymnast_total, 3)
+        )
+
+def get_csv_line(category='Category', rank='Rang', last_name='Nom', first_name='Prenom', club='Club', scms='SCMS', db='DB', da='DA', artistry='A', execution='EXE', penalty='Pen', total='Total', diff_total='Diff total', diff_total_cumul='Diff total cumul'):
+    return [category, rank, last_name, first_name, club, scms, db, da, artistry, execution, penalty, total, diff_total, diff_total_cumul]
+
+def get_gymnast_total(gymnast_json):
+    total = 0
+    for apparatus in gymnast_json['apparatuses'].keys():
+        total = total + gymnast_json['apparatuses'][apparatus]['total']
+    return total
+
+def write_results(results_json):
+    event_id = results_json['event_id']
+    file_name = f"results_{event_id}.csv"
+
+    with open(file_name, 'w') as f:
+        writer = csv.writer(f)
+        first_gymnast_total = 0
+        previous_gymnast_total = 0
+        for category in results_json['categories'].keys():
+            writer.writerow(get_csv_line())
+            category_json = results_json['categories'][category]
+            apparatuses = category_json['1'][0]['apparatuses'].keys()
+            for apparatus in apparatuses:
+                for rank in category_json.keys():
+                    gymnasts = category_json[rank]
+                    if rank == '1':
+                        first_gymnast_total = get_gymnast_total(gymnasts[0])
+                        previous_gymnast_total = first_gymnast_total
+                    for gymnast in gymnasts:
+                        writer.writerow(get_csv_line_from_gymnast_json(gymnast, category, apparatus, first_gymnast_total, previous_gymnast_total))
+                        previous_gymnast_total = get_gymnast_total(gymnast)
+
+def get_csv_results(event_ids):
+    results = get_vertical_ranking(event_ids)
+    write_results(results)
+
+    print('Finished!')
+
 # test get_results_event_json
 #print(get_results_event_json(13579))
 
@@ -189,5 +258,6 @@ def format_mark(mark):
 # test get_results_event
 #print(json.dumps(get_results_event(get_results_event_json(13579))))
 
-print(json.dumps(get_vertical_ranking(EVENTS)))
+#print(json.dumps(get_vertical_ranking(EVENTS)))
 #get_vertical_ranking(EVENTS)
+get_csv_results(['14130'])
