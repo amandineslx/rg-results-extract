@@ -1,0 +1,140 @@
+{
+  "markRank": 1,
+  "id": 2429459,
+  "type": "IND",
+  "lastname": "DARRIGADE",
+  "firstname": "Fanny",
+  "licence": "93006.106.00586",
+  "idClub": 2500,
+  "club": "SPORTING CLUB MOUANS SARTOUX GYMNASTIQUE RYTHMIQUE",
+  "city": "MOUANS SARTOUX",
+  "dossart": 397,
+  "nationality": "FRA",
+  "mark": {
+    "id": 206939,
+    "value": "36.8660000000",
+    "rank": 1,
+    "dossart": 397,
+    "entityType": "IND",
+    "appMarks": [
+      {
+        "id": 726348,
+        "labelApp": "Massues",
+        "codeApp": "015",
+        "value": "18.8000000000",
+        "dossart": 397,
+        "rank": 1,
+        "passageMarks": [
+          {
+            "id": 667267,
+            "passage": 1,
+            "value": "18.8000000000",
+            "dossart": 397,
+            "corpsMarks": [
+              {
+                "id": 2395611,
+                "corps": "DB",
+                "value": "2.7000000000",
+                "dossart": 397,
+                "ordre": 1
+              },
+              {
+                "id": 2395612,
+                "corps": "DA",
+                "value": "2.4000000000",
+                "dossart": 397,
+                "ordre": 2
+              },
+              {
+                "id": 2395613,
+                "corps": "Art.",
+                "value": "7.4000000000",
+                "dossart": 397,
+                "ordre": 3
+              },
+              {
+                "id": 2395614,
+                "corps": "Exé.",
+                "value": "6.9000000000",
+                "dossart": 397,
+                "ordre": 4
+              },
+              {
+                "id": 2395615,
+                "corps": "Pén.",
+                "value": "0.6000000000",
+                "dossart": 397,
+                "ordre": 5
+              },
+              {
+                "id": 2395616,
+                "corps": "DIFFICULTE 2023",
+                "value": "5.1000000000",
+                "dossart": 397
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": 726349,
+        "labelApp": "Ruban",
+        "codeApp": "017",
+        "value": "18.0660000000",
+        "dossart": 397,
+        "rank": 1,
+        "passageMarks": [
+          {
+            "id": 667268,
+            "passage": 1,
+            "value": "18.0660000000",
+            "dossart": 397,
+            "corpsMarks": [
+              {
+                "id": 2395617,
+                "corps": "DB",
+                "value": "2.8000000000",
+                "dossart": 397,
+                "ordre": 1
+              },
+              {
+                "id": 2395618,
+                "corps": "DA",
+                "value": "2.3000000000",
+                "dossart": 397,
+                "ordre": 2
+              },
+              {
+                "id": 2395619,
+                "corps": "Art.",
+                "value": "6.5000000000",
+                "dossart": 397,
+                "ordre": 3
+              },
+              {
+                "id": 2395620,
+                "corps": "Exé.",
+                "value": "6.4660000000",
+                "dossart": 397,
+                "ordre": 4
+              },
+              {
+                "id": 2395621,
+                "corps": "Pén.",
+                "value": "0E-10",
+                "dossart": 397,
+                "ordre": 5
+              },
+              {
+                "id": 2395622,
+                "corps": "DIFFICULTE 2023",
+                "value": "5.1000000000",
+                "dossart": 397
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

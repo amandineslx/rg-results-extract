@@ -1,0 +1,116 @@
+{
+  "1": [
+    {
+      "last_name": "FARAMIA",
+      "first_name": "Annael",
+      "club": "ASSOCIATION INTERCOMMUNALE SPORTIVE ET ARTISTIQUE GR Côte d'Azur",
+      "rank": 1,
+      "total": 17.633,
+      "apparatuses": {
+        "massues": {
+          "DB": 0.6,
+          "DA": 2.3,
+          "A": 7.9,
+          "E": 6.833,
+          "P": 0,
+          "total": 17.633
+        }
+      }
+    }
+  ],
+  "2": [
+    {
+      "last_name": "RODRIGUES DE CASTRO",
+      "first_name": "Maéva",
+      "club": "SAINT PAUL LA COLLE OMNISPORTS CLUB GYMNASTIQUE RYTHMIQUE",
+      "rank": 2,
+      "total": 17.533,
+      "apparatuses": {
+        "massues": {
+          "DB": 1.1,
+          "DA": 1.7,
+          "A": 8.1,
+          "E": 6.633,
+          "P": 0,
+          "total": 17.533
+        }
+      }
+    }
+  ],
+  "3": [
+    {
+      "last_name": "TOBIA",
+      "first_name": "Charlotte",
+      "club": "SAINT PAUL LA COLLE OMNISPORTS CLUB GYMNASTIQUE RYTHMIQUE",
+      "rank": 3,
+      "total": 15.6,
+      "apparatuses": {
+        "massues": {
+          "DB": 0.8,
+          "DA": 1.6,
+          "A": 7.7,
+          "E": 5.5,
+          "P": 0,
+          "total": 15.6
+        }
+      }
+    }
+  ],
+  "4": [
+    {
+      "last_name": "APPIETTO",
+      "first_name": "Lesia",
+      "club": "SAINT PAUL LA COLLE OMNISPORTS CLUB GYMNASTIQUE RYTHMIQUE",
+      "rank": 4,
+      "total": 14.532,
+      "apparatuses": {
+        "massues": {
+          "DB": 0.7,
+          "DA": 1.5,
+          "A": 7.366,
+          "E": 5.266,
+          "P": 0.3,
+          "total": 14.532
+        }
+      }
+    }
+  ],
+  "5": [
+    {
+      "last_name": "DANNA",
+      "first_name": "Letizia",
+      "club": "SAINT PAUL LA COLLE OMNISPORTS CLUB GYMNASTIQUE RYTHMIQUE",
+      "rank": 5,
+      "total": 13.333,
+      "apparatuses": {
+        "massues": {
+          "DB": 0.6,
+          "DA": 1.3,
+          "A": 6.933,
+          "E": 4.5,
+          "P": 0,
+          "total": 13.333
+        }
+      }
+    }
+  ],
+  "6": [
+    {
+      "last_name": "QUEVAL",
+      "first_name": "Marie",
+      "club": "SPORTING CLUB MOUANS SARTOUX GYMNASTIQUE RYTHMIQUE",
+      "rank": 6,
+      "total": 13.066,
+      "apparatuses": {
+        "massues": {
+          "DB": 0.4,
+          "DA": 1.1,
+          "A": 7.033,
+          "E": 5.133,
+          "P": 0.6,
+          "total": 13.066
+        }
+      }
+    }
+  ]
+}

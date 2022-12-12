@@ -1,0 +1,49 @@
+{
+  "id": 667267,
+  "passage": 1,
+  "value": "18.8000000000",
+  "dossart": 397,
+  "corpsMarks": [
+    {
+      "id": 2395611,
+      "corps": "DB",
+      "value": "2.7000000000",
+      "dossart": 397,
+      "ordre": 1
+    },
+    {
+      "id": 2395612,
+      "corps": "DA",
+      "value": "2.4000000000",
+      "dossart": 397,
+      "ordre": 2
+    },
+    {
+      "id": 2395613,
+      "corps": "Art.",
+      "value": "7.4000000000",
+      "dossart": 397,
+      "ordre": 3
+    },
+    {
+      "id": 2395614,
+      "corps": "Exé.",
+      "value": "6.9000000000",
+      "dossart": 397,
+      "ordre": 4
+    },
+    {
+      "id": 2395615,
+      "corps": "Pén.",
+      "value": "0.6000000000",
+      "dossart": 397,
+      "ordre": 5
+    },
+    {
+      "id": 2395616,
+      "corps": "DIFFICULTE 2023",
+      "value": "5.1000000000",
+      "dossart": 397
+    }
+  ]
+}

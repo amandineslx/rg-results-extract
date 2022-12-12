@@ -1,0 +1,361 @@
+{
+  "1": [
+    {
+      "last_name": "DUVAL",
+      "first_name": "Maëlys",
+      "club": "GYMNASTIQUE RYTHMIQUE AIX EN PROVENCE",
+      "rank": 1,
+      "total": 18.099,
+      "apparatuses": {
+        "massues": {
+          "DB": 1.1,
+          "DA": 1.4,
+          "A": 8.366,
+          "E": 7.233,
+          "P": 0,
+          "total": 18.099
+        }
+      }
+    }
+  ],
+  "2": [
+    {
+      "last_name": "TRANI",
+      "first_name": "Alyson",
+      "club": "CLUB GYMNIQUE DE BONNEVEINE MARSEILLE",
+      "rank": 2,
+      "total": 17.966,
+      "apparatuses": {
+        "massues": {
+          "DB": 1.2,
+          "DA": 1.2,
+          "A": 8.333,
+          "E": 7.233,
+          "P": 0,
+          "total": 17.966
+        }
+      }
+    }
+  ],
+  "3": [
+    {
+      "last_name": "KLOTCHKO",
+      "first_name": "Kristina",
+      "club": "SOCIETE CULTURELLE ET OMNISPORTS DE SAINTE-MARGUERITE",
+      "rank": 3,
+      "total": 17.366,
+      "apparatuses": {
+        "massues": {
+          "DB": 0.6,
+          "DA": 2.4,
+          "A": 8.066,
+          "E": 6.3,
+          "P": 0,
+          "total": 17.366
+        }
+      }
+    }
+  ],
+  "4": [
+    {
+      "last_name": "ACREMENT",
+      "first_name": "Amadea",
+      "club": "GYMNASTIQUE RYTHMIQUE AIX EN PROVENCE",
+      "rank": 4,
+      "total": 16.733,
+      "apparatuses": {
+        "massues": {
+          "DB": 0.8,
+          "DA": 2.1,
+          "A": 6.9,
+          "E": 6.933,
+          "P": 0,
+          "total": 16.733
+        }
+      }
+    }
+  ],
+  "5": [
+    {
+      "last_name": "BOTTI",
+      "first_name": "Victoria",
+      "club": "GYM RYTHMIC VITROLLES",
+      "rank": 5,
+      "total": 16.333,
+      "apparatuses": {
+        "massues": {
+          "DB": 1.3,
+          "DA": 0.7,
+          "A": 7.833,
+          "E": 6.5,
+          "P": 0,
+          "total": 16.333
+        }
+      }
+    }
+  ],
+  "6": [
+    {
+      "last_name": "MARCOS",
+      "first_name": "Elina",
+      "club": "GYM RYTHMIQUE CLUB SALON GRANS",
+      "rank": 6,
+      "total": 16.299,
+      "apparatuses": {
+        "massues": {
+          "DB": 1.2,
+          "DA": 1.7,
+          "A": 8.133,
+          "E": 5.266,
+          "P": 0,
+          "total": 16.299
+        }
+      }
+    }
+  ],
+  "7": [
+    {
+      "last_name": "JEAN",
+      "first_name": "Camille",
+      "club": "CLUB GYMNIQUE DE BONNEVEINE MARSEILLE",
+      "rank": 7,
+      "total": 16.2,
+      "apparatuses": {
+        "massues": {
+          "DB": 0.9,
+          "DA": 1.1,
+          "A": 7.7,
+          "E": 6.5,
+          "P": 0,
+          "total": 16.2
+        }
+      }
+    }
+  ],
+  "8": [
+    {
+      "last_name": "DELMI",
+      "first_name": "Kamelia",
+      "club": "CLUB GYMNIQUE DE BONNEVEINE MARSEILLE",
+      "rank": 8,
+      "total": 16.033,
+      "apparatuses": {
+        "massues": {
+          "DB": 0.9,
+          "DA": 1.2,
+          "A": 7.633,
+          "E": 6.3,
+          "P": 0,
+          "total": 16.033
+        }
+      }
+    }
+  ],
+  "9": [
+    {
+      "last_name": "PEREZ",
+      "first_name": "Anaïa",
+      "club": "UNION GYMNIQUE DU CANTON DES SOLLIES",
+      "rank": 9,
+      "total": 15.999,
+      "apparatuses": {
+        "massues": {
+          "DB": 0.9,
+          "DA": 1.5,
+          "A": 7.366,
+          "E": 6.233,
+          "P": 0,
+          "total": 15.999
+        }
+      }
+    }
+  ],
+  "10": [
+    {
+      "last_name": "COLLET SCHMELTZER",
+      "first_name": "Léa",
+      "club": "CLUB GYMNIQUE DE BONNEVEINE MARSEILLE",
+      "rank": 10,
+      "total": 15.766,
+      "apparatuses": {
+        "massues": {
+          "DB": 1.1,
+          "DA": 0.7,
+          "A": 7.133,
+          "E": 6.833,
+          "P": 0,
+          "total": 15.766
+        }
+      }
+    }
+  ],
+  "11": [
+    {
+      "last_name": "DUPRE OLIVES",
+      "first_name": "Maxine",
+      "club": "GYM RYTHMIC VITROLLES",
+      "rank": 11,
+      "total": 15.199,
+      "apparatuses": {
+        "massues": {
+          "DB": 0.6,
+          "DA": 0.6,
+          "A": 7.833,
+          "E": 6.166,
+          "P": 0,
+          "total": 15.199
+        }
+      }
+    }
+  ],
+  "12": [
+    {
+      "last_name": "MASSERAND",
+      "first_name": "Lilou",
+      "club": "UNION GYMNIQUE DU CANTON DES SOLLIES",
+      "rank": 12,
+      "total": 14.866,
+      "apparatuses": {
+        "massues": {
+          "DB": 0.8,
+          "DA": 1.1,
+          "A": 7.2,
+          "E": 5.766,
+          "P": 0,
+          "total": 14.866
+        }
+      }
+    },
+    {
+      "last_name": "KIEFFER",
+      "first_name": "Annaé",
+      "club": "ASSOCIATION SPORTIVE ST RAPHAELOISE GRS",
+      "rank": 12,
+      "total": 14.866,
+      "apparatuses": {
+        "massues": {
+          "DB": 0.9,
+          "DA": 1.3,
+          "A": 6.6,
+          "E": 6.066,
+          "P": 0,
+          "total": 14.866
+        }
+      }
+    }
+  ],
+  "14": [
+    {
+      "last_name": "CARRASCO",
+      "first_name": "Emma",
+      "club": "GYMNASTIQUE RYTHMIQUE AIX EN PROVENCE",
+      "rank": 14,
+      "total": 14.799,
+      "apparatuses": {
+        "massues": {
+          "DB": 0.7,
+          "DA": 1,
+          "A": 7.133,
+          "E": 5.966,
+          "P": 0,
+          "total": 14.799
+        }
+      }
+    }
+  ],
+  "15": [
+    {
+      "last_name": "BEAUDOIN",
+      "first_name": "Charlotte",
+      "club": "SOCIETE CULTURELLE ET OMNISPORTS DE SAINTE-MARGUERITE",
+      "rank": 15,
+      "total": 14.532,
+      "apparatuses": {
+        "massues": {
+          "DB": 0.6,
+          "DA": 1.7,
+          "A": 6.966,
+          "E": 5.266,
+          "P": 0,
+          "total": 14.532
+        }
+      }
+    }
+  ],
+  "16": [
+    {
+      "last_name": "RONDONY",
+      "first_name": "Nejma",
+      "club": "GYMNASTIQUE RYTHMIQUE AIX EN PROVENCE",
+      "rank": 16,
+      "total": 14.233,
+      "apparatuses": {
+        "massues": {
+          "DB": 1,
+          "DA": 1.1,
+          "A": 6.233,
+          "E": 5.9,
+          "P": 0,
+          "total": 14.233
+        }
+      }
+    }
+  ],
+  "17": [
+    {
+      "last_name": "CAMPISTRON",
+      "first_name": "Lou",
+      "club": "CLUB GYMNIQUE DE BONNEVEINE MARSEILLE",
+      "rank": 17,
+      "total": 13.3,
+      "apparatuses": {
+        "massues": {
+          "DB": 0.5,
+          "DA": 0.9,
+          "A": 7.2,
+          "E": 4.7,
+          "P": 0,
+          "total": 13.3
+        }
+      }
+    }
+  ],
+  "18": [
+    {
+      "last_name": "REYNAUD",
+      "first_name": "Hanae",
+      "club": "GYM RYTHMIQUE CLUB SALON GRANS",
+      "rank": 18,
+      "total": 12.666,
+      "apparatuses": {
+        "massues": {
+          "DB": 0.6,
+          "DA": 1.2,
+          "A": 6.766,
+          "E": 4.4,
+          "P": 0.3,
+          "total": 12.666
+        }
+      }
+    }
+  ],
+  "19": [
+    {
+      "last_name": "ESCLOPE",
+      "first_name": "Romane",
+      "club": "GYMNASTIQUE RYTHMIQUE AIX EN PROVENCE",
+      "rank": 19,
+      "total": 10.3,
+      "apparatuses": {
+        "massues": {
+          "DB": 0.3,
+          "DA": 0.7,
+          "A": 7.1,
+          "E": 3.1,
+          "P": 0.9,
+          "total": 10.3
+        }
+      }
+    }
+  ]
+}
