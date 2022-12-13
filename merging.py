@@ -1,4 +1,7 @@
 def get_vertical_ranking(events_results):
+    """
+    Get the merged ranking between all the provided event results.
+    """
     if len(events_results) == 1:
         return events_results[0]
 
@@ -10,6 +13,9 @@ def get_vertical_ranking(events_results):
     return vertical_ranking
 
 def merge_events(event1, event2):
+    """
+    Merge the rankings of two events.
+    """
     merge = dict()
 
     merge['event_id'] = '-'.join([str(event1['event_id']), str(event2['event_id'])]) if event1.get('event_id') else event2['event_id']
@@ -27,10 +33,16 @@ def merge_events(event1, event2):
     return merge
 
 def merge_categories(event1, category1, event2, category2):
+    """
+    Merge two corresponding categories of two events.
+    """
+    # if both categories from the two events are empty (should not happen)
     if not category1 and not category2:
         return []
+    # if there are gymnasts in this category only in event 2
     if not category1:
         return category2
+    # if there are gymnasts in this category only in event 1
     if not category2:
         return category1
 
@@ -39,6 +51,7 @@ def merge_categories(event1, category1, event2, category2):
     i_cat1 = 0
     i_cat2 = 0
 
+    # iterate over the two categories in parallel
     while i_cat1 < len(category1) and i_cat2 < len(category2):
         gymnasts1 = category1[i_cat1]
         for gymnast in gymnasts1:
@@ -50,20 +63,28 @@ def merge_categories(event1, category1, event2, category2):
             gymnast['event_label'] = event2['event_label']
 
         comparison = compare_gymnasts_lists(gymnasts1, gymnasts2)
+        # if the scores of both lists of ex aequo gymnasts are the same
         if comparison == 0:
+            # concatenate the lists of gymnasts and add them to the category list
             gymnasts = gymnasts1 + gymnasts2
             category.append(gymnasts)
+            # increase both iterators
             i_cat1+=1
             i_cat2+=1
         elif comparison < 0:
+            # if ex aequo gymnasts from event 1 have a best score than ex aequo gymnasts from event 2
             category.append(gymnasts1)
             i_cat1+=1
         elif comparison > 0:
+            # if ex aequo gymnasts from event 2 have a best score than ex aequo gymnasts from event 1
             category.append(gymnasts2)
             i_cat2+=1
+    # while there are remaining gymnasts in category 1
+    # there will not be remaining gymnasts both in category 1 and 2 at the same time
     while i_cat1 < len(category1):
         category.append(category1[i_cat1])
         i_cat1+=1
+    # while there are remaining gymnasts in category 2
     while i_cat2 < len(category2):
         category.append(category2[i_cat2])
         i_cat2+=1
@@ -71,7 +92,9 @@ def merge_categories(event1, category1, event2, category2):
     return category
 
 def compare_gymnasts_lists(gymnasts1, gymnasts2):
-    # TODO there is an issue with sollies results
+    """
+    Compare the scores of the ex aequo gymnasts from event 1 with the score of the ex aequo gymnasts from event 2.
+    """
     gymnast1 = gymnasts1[0] if gymnasts1 else None
     gymnast2 = gymnasts2[0] if gymnasts2 else None
     if not gymnast1 and not gymnast2:
