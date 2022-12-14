@@ -20,9 +20,10 @@ def get_csv_line_from_gymnast_apparatus_json(gymnast_json, category, apparatus, 
         artistry=apparatus_json['A'],
         execution=apparatus_json['E'],
         penalty=apparatus_json['P'],
-        total=apparatus_json['total'],
-        diff_total=round(apparatus_json['total'] - previous_gymnast_total, 3),
-        diff_total_cumul=round(apparatus_json['total'] - first_gymnast_total, 3)
+        apparatus_total=apparatus_json['total'],
+        total=gymnast_json['total'],
+        diff_total=round(gymnast_json['total'] - previous_gymnast_total, 3),
+        diff_total_cumul=round(gymnast_json['total'] - first_gymnast_total, 3)
         )
 
 def get_csv_line(
@@ -38,13 +39,14 @@ def get_csv_line(
     artistry='A',
     execution='EXE',
     penalty='Pen',
+    apparatus_total='Total engin',
     total='Total',
     diff_total='Diff total',
     diff_total_cumul='Diff total cumul'):
     """
     Generate a line to be written in the CSV file with all caracteristics for an apparatus of a gymnast. Keeping the default values generates a header line.
     """
-    return [category, apparatus, rank, last_name, first_name, club, scms, db, da, artistry, execution, penalty, total, diff_total, diff_total_cumul]
+    return [category, apparatus, rank, last_name, first_name, club, scms, db, da, artistry, execution, penalty, apparatus_total, total, diff_total, diff_total_cumul]
 
 def write_results(results_json):
     """
@@ -78,7 +80,7 @@ def write_results(results_json):
                 for gymnasts in category_json:
                     # if the gymnast is the first one of the category, keep its score to compute the cumulated total difference
                     if previous_gymnast_total == -1:
-                        first_gymnast_total = gymnasts[0]['apparatuses'][apparatus]['total']
+                        first_gymnast_total = gymnasts[0]['total']
                         previous_gymnast_total = first_gymnast_total
 
                     # for each gymnast in this ranking
@@ -86,4 +88,4 @@ def write_results(results_json):
                         # write score of the gymnast apparatus
                         writer.writerow(get_csv_line_from_gymnast_apparatus_json(gymnast, category, apparatus, first_gymnast_total, previous_gymnast_total))
                         # keep this gymnast score as the previous total to compute the difference between this gymnast and the next one
-                        previous_gymnast_total = gymnasts[0]['apparatuses'][apparatus]['total']
+                        previous_gymnast_total = gymnast['total']
