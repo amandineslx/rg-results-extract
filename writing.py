@@ -11,8 +11,7 @@ def get_csv_line_from_gymnast_apparatus_json(gymnast_json, category, apparatus, 
         category=category,
         apparatus=apparatus,
         rank=gymnast_json['rank'],
-        last_name=gymnast_json['last_name'],
-        first_name=gymnast_json['first_name'],
+        name=gymnast_json['name'],
         club=gymnast_json['club'],
         scms='x' if gymnast_json['club'] == SCMS else '',
         db=apparatus_json['DB'],
@@ -30,8 +29,7 @@ def get_csv_line(
     category='Categorie',
     apparatus='Engin',
     rank='Rang',
-    last_name='Nom',
-    first_name='Prenom',
+    name='Nom',
     club='Club',
     scms='SCMS',
     db='DB',
@@ -46,7 +44,7 @@ def get_csv_line(
     """
     Generate a line to be written in the CSV file with all caracteristics for an apparatus of a gymnast. Keeping the default values generates a header line.
     """
-    return [category, apparatus, rank, last_name, first_name, club, scms, db, da, artistry, execution, penalty, apparatus_total, total, diff_total, diff_total_cumul]
+    return [category, apparatus, rank, name, club, scms, db, da, artistry, execution, penalty, apparatus_total, total, diff_total, diff_total_cumul]
 
 def write_results(results_json):
     """

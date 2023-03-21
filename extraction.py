@@ -44,8 +44,11 @@ def get_results_gymnast(gymnast):
     """
     results_gymnast = dict()
 
-    results_gymnast['last_name'] = gymnast['lastname']
-    results_gymnast['first_name'] = gymnast['firstname']
+    if 'firstname' in gymnast and 'lastname' in gymnast:
+        results_gymnast['name'] = gymnast['lastname'] + ' ' + gymnast['firstname']
+    else:
+        results_gymnast['name'] = gymnast['club'] + ' - ' + gymnast['label']
+
     results_gymnast['club'] = gymnast['club']
     results_gymnast['rank'] = gymnast['markRank']
 
