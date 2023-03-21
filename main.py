@@ -6,6 +6,7 @@ EVENT_IDS = {
   "la_colle_2022": ["13441"],
   "sollies_2022": ["13579", "13580"],
   "vitrolles_2022": ["14130"],
+  "mouans_2023": ["14425"],
   "aix_2023": ["14715", "14716"]
 }
 
@@ -18,4 +19,4 @@ def generate_results_file(event_ids):
     write_results(vertical_ranking)
     print("Finished!")
 
-generate_results_file(EVENT_IDS['aix_2023'])
+generate_results_file(EVENT_IDS['mouans_2023'])

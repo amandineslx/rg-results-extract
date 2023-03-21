@@ -28,7 +28,7 @@ def format_mark(mark):
 
 def get_results_apparatus(passage):
     """
-    Build a structure containing the marks for a given apparatus for a given gymnast. Takes as input the passageMarks JSON structure from the input JSON.
+    Build a structure containing the marks for a given apparatus for a given gymnast/team. Takes as input the passageMarks JSON structure from the input JSON.
     """
     results_passage = dict()
 
@@ -38,32 +38,32 @@ def get_results_apparatus(passage):
 
     return results_passage
 
-def get_results_gymnast(gymnast):
+def get_results_entity(entity):
     """
-    Build a structure containing the information about a given gymnast. Takes as input the entity in the palmares JSON structure from the input JSON.
+    Build a structure containing the information about a given gymnast/team. Takes as input the entity in the palmares JSON structure from the input JSON.
     """
-    results_gymnast = dict()
+    results_entity = dict()
 
-    if 'firstname' in gymnast and 'lastname' in gymnast:
-        results_gymnast['name'] = gymnast['lastname'] + ' ' + gymnast['firstname']
+    if 'firstname' in entity and 'lastname' in entity:
+        results_entity['name'] = entity['lastname'] + ' ' + entity['firstname']
     else:
-        results_gymnast['name'] = gymnast['club'] + ' - ' + gymnast['label']
+        results_entity['name'] = entity['club'] + ' - ' + entity['label']
 
-    results_gymnast['club'] = gymnast['club']
-    results_gymnast['rank'] = gymnast['markRank']
+    results_entity['club'] = entity['club']
+    results_entity['rank'] = entity['markRank']
 
-    gymnast_mark = gymnast['mark']
-    results_gymnast['total'] = format_mark(gymnast_mark['value'])
-    results_gymnast_apparatuses = dict()
+    entity_mark = entity['mark']
+    results_entity['total'] = format_mark(entity_mark['value'])
+    results_entity_apparatuses = dict()
 
-    for mark in gymnast_mark['appMarks']:
+    for mark in entity_mark['appMarks']:
         apparatus_label = mark['labelApp'].lower()
-        results_gymnast_apparatuses[apparatus_label] = get_results_apparatus(mark['passageMarks'][0])
-        results_gymnast_apparatuses[apparatus_label]['total'] = format_mark(mark['value'])
+        results_entity_apparatuses[apparatus_label] = get_results_apparatus(mark['passageMarks'][0])
+        results_entity_apparatuses[apparatus_label]['total'] = format_mark(mark['value'])
 
-    results_gymnast['apparatuses'] = results_gymnast_apparatuses
+    results_entity['apparatuses'] = results_entity_apparatuses
 
-    return results_gymnast
+    return results_entity
 
 def get_results_category(category):
     """
@@ -72,17 +72,17 @@ def get_results_category(category):
     # takes as input the category
     results_category = []
 
-    previous_gymnast_rank = 1
-    gymnasts_for_rank = []
+    previous_entity_rank = 1
+    entities_for_rank = []
 
-    for gymnast in category['entities']:
-        if gymnast['markRank'] == previous_gymnast_rank:
-            gymnasts_for_rank.append(get_results_gymnast(gymnast))
+    for entity in category['entities']:
+        if entity['markRank'] == previous_entity_rank:
+            entities_for_rank.append(get_results_entity(entity))
         else:
-            results_category.append(gymnasts_for_rank)
-            gymnasts_for_rank = [get_results_gymnast(gymnast)]
-            previous_gymnast_rank = gymnast['markRank']
-    results_category.append(gymnasts_for_rank)
+            results_category.append(entities_for_rank)
+            entities_for_rank = [get_results_entity(entity)]
+            previous_entity_rank = entity['markRank']
+    results_category.append(entities_for_rank)
 
     return results_category
 
