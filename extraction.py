@@ -50,7 +50,7 @@ def get_results_entity(entity):
         results_entity['name'] = entity['club'] + ' - ' + entity['label']
 
     results_entity['club'] = entity['club']
-    results_entity['rank'] = entity['markRank']
+    results_entity['initial_rank'] = entity['markRank']
 
     entity_mark = entity['mark']
     results_entity['total'] = format_mark(entity_mark['value'])

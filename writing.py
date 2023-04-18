@@ -11,6 +11,7 @@ def get_csv_line_from_entity_apparatus_json(entity_json, category, apparatus, fi
         category=category,
         apparatus=apparatus,
         rank=entity_json['rank'],
+        initial_rank=entity_json['initial_rank'],
         name=entity_json['name'],
         club=entity_json['club'],
         scms='x' if entity_json['club'] == SCMS else '',
@@ -29,6 +30,7 @@ def get_csv_line(
     category='Categorie',
     apparatus='Engin',
     rank='Rang',
+    initial_rank='Rang init',
     name='Nom',
     club='Club',
     scms='SCMS',
@@ -44,7 +46,7 @@ def get_csv_line(
     """
     Generate a line to be written in the CSV file with all caracteristics for an apparatus of a gymnast/team. Keeping the default values generates a header line.
     """
-    return [category, apparatus, rank, name, club, scms, db, da, artistry, execution, penalty, apparatus_total, total, diff_total, diff_total_cumul]
+    return [category, apparatus, rank, initial_rank, name, club, scms, db, da, artistry, execution, penalty, apparatus_total, total, diff_total, diff_total_cumul]
 
 def write_results(results_json):
     """
@@ -54,7 +56,7 @@ def write_results(results_json):
     file_name = f"results_{event_id}.csv"
 
     # create output file
-    with open(file_name, 'w', encoding='cp1252') as f:
+    with open('./results/'+file_name, 'w', encoding='cp1252') as f:
         writer = csv.writer(f)
 
         first_entity_total = 0
@@ -79,6 +81,7 @@ def write_results(results_json):
                 previous_entity_total = -1
 
                 # for each ranking in the category
+                ranking = 1
                 for entities in category_json:
                     # if the gymnast/team is the first one of the category, keep its score to compute the cumulated total difference
                     if previous_entity_total == -1:
@@ -88,6 +91,8 @@ def write_results(results_json):
                     # for each gymnast/team in this ranking
                     for entity in entities:
                         # write score of the gymnast/team apparatus
+                        entity['rank'] = ranking
                         writer.writerow(get_csv_line_from_entity_apparatus_json(entity, category, apparatus, first_entity_total, previous_entity_total))
                         # keep this gymnast/team score as the previous total to compute the difference between this gymnast/team and the next one
                         previous_entity_total = entity['total']
+                        ranking += 1
