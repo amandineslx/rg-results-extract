@@ -87,7 +87,19 @@ def get_results_category(category, event_title):
 
     return results_category
 
-def get_results_event(event_id, event_title):
+def _is_regional_category(category_label):
+    return _category_contains_any_label(category_label, ["régional", "fédérale r", "regional"])
+
+def _is_ignored_category(category_label):
+    return _category_contains_any_label(category_label, ["nationale par equipe"])
+
+def _category_contains_any_label(category_label, labels):
+    for label in labels:
+        if label in category_label.lower():
+            return True
+    return False
+
+def get_results_event(event_id, config):
     """
     Build a structure containing the information about a given event. Takes as input the event ID.
     """
@@ -97,12 +109,16 @@ def get_results_event(event_id, event_title):
 
     results_event['event_id'] = results_event_json['event']['id']
     results_event['event_label'] = results_event_json['event']['libelle']
-    results_event['event_title'] = event_title
+    results_event['event_title'] = config.title
 
     categories = dict()
 
     for category in results_event_json['categories']:
-        categories[category['label']] = get_results_category(category, event_title)
+        if _is_ignored_category(category['label']):
+            continue
+        if config.ignore_regionals and _is_regional_category(category['label']):
+            continue
+        categories[category['label']] = get_results_category(category, config.events[event_id])
 
     results_event['categories'] = categories
 
@@ -115,6 +131,6 @@ def get_results_events(config):
     results_events = []
 
     for event_id, event_title in config.events.items():
-        results_events.append(get_results_event(event_id, event_title))
+        results_events.append(get_results_event(event_id, config))
 
     return results_events

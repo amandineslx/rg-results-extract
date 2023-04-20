@@ -50,15 +50,11 @@ def get_csv_line(
     """
     return [category, apparatus, rank, event, initial_rank, name, club, scms, db, da, artistry, execution, penalty, apparatus_total, total, diff_total, diff_total_cumul]
 
-def write_results(results_json, event_title=None):
+def write_results(results_json, config):
     """
     Write the event results to a CSV file.
     """
-    if event_title:
-        file_name = f"results_{event_title}.csv"
-    else:
-        event_id = results_json['event_id']
-        file_name = f"results_{event_id}.csv"
+    file_name = f"results_{config.title}.csv"
 
     # create output file
     with open('./results/'+file_name, 'w', encoding='cp1252') as f:

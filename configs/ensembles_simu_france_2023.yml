@@ -1,4 +1,5 @@
-title: simu-france-2023
+title: ensembles_simu_france_2023
+ignore_regionals: true
 events:
   - title: PACA
     ids: 14342
