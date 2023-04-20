@@ -11,6 +11,7 @@ def get_csv_line_from_entity_apparatus_json(entity_json, category, apparatus, fi
         category=category,
         apparatus=apparatus,
         rank=entity_json['rank'],
+        event=entity_json['event'],
         initial_rank=entity_json['initial_rank'],
         name=entity_json['name'],
         club=entity_json['club'],
@@ -30,6 +31,7 @@ def get_csv_line(
     category='Categorie',
     apparatus='Engin',
     rank='Rang',
+    event='Evenement',
     initial_rank='Rang init',
     name='Nom',
     club='Club',
@@ -46,14 +48,17 @@ def get_csv_line(
     """
     Generate a line to be written in the CSV file with all caracteristics for an apparatus of a gymnast/team. Keeping the default values generates a header line.
     """
-    return [category, apparatus, rank, initial_rank, name, club, scms, db, da, artistry, execution, penalty, apparatus_total, total, diff_total, diff_total_cumul]
+    return [category, apparatus, rank, event, initial_rank, name, club, scms, db, da, artistry, execution, penalty, apparatus_total, total, diff_total, diff_total_cumul]
 
-def write_results(results_json):
+def write_results(results_json, event_title=None):
     """
     Write the event results to a CSV file.
     """
-    event_id = results_json['event_id']
-    file_name = f"results_{event_id}.csv"
+    if event_title:
+        file_name = f"results_{event_title}.csv"
+    else:
+        event_id = results_json['event_id']
+        file_name = f"results_{event_id}.csv"
 
     # create output file
     with open('./results/'+file_name, 'w', encoding='cp1252') as f:

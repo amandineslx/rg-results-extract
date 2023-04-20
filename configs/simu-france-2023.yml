@@ -1,0 +1,28 @@
+title: simu-france-2023
+events:
+  - title: PACA
+    ids: 14342
+  - title: Auvergne - Rhone Alpes
+    ids: 14510
+  - title: Bretagne
+    ids: 14862
+  - title: Centre - Val de Loire
+    ids: 14359
+  - title: Corse
+    ids: 14477
+  - title: Grand Est
+    ids: 14459
+  - title: Guadeloupe
+    ids: 14771
+  - title: Hauts-de-France
+    ids: 14789
+  - title: Ile-de-France
+    ids: 14661,14586
+  - title: Martinique
+    ids: 14907
+  - title: Normandie
+    ids: 13890
+  - title: Nouvelle-Aquitaine
+    ids: 13775
+  - title: Occitanie
+    ids: 14905

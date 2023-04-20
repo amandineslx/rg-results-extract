@@ -38,7 +38,7 @@ def get_results_apparatus(passage):
 
     return results_passage
 
-def get_results_entity(entity):
+def get_results_entity(entity, event_title):
     """
     Build a structure containing the information about a given gymnast/team. Takes as input the entity in the palmares JSON structure from the input JSON.
     """
@@ -49,6 +49,7 @@ def get_results_entity(entity):
     else:
         results_entity['name'] = entity['club'] + ' - ' + entity['label']
 
+    results_entity['event'] = event_title
     results_entity['club'] = entity['club']
     results_entity['initial_rank'] = entity['markRank']
 
@@ -65,7 +66,7 @@ def get_results_entity(entity):
 
     return results_entity
 
-def get_results_category(category):
+def get_results_category(category, event_title):
     """
     Build a structure containing the information about a given category. Takes as input the category JSON structure from the input JSON.
     """
@@ -77,16 +78,16 @@ def get_results_category(category):
 
     for entity in category['entities']:
         if entity['markRank'] == previous_entity_rank:
-            entities_for_rank.append(get_results_entity(entity))
+            entities_for_rank.append(get_results_entity(entity, event_title))
         else:
             results_category.append(entities_for_rank)
-            entities_for_rank = [get_results_entity(entity)]
+            entities_for_rank = [get_results_entity(entity, event_title)]
             previous_entity_rank = entity['markRank']
     results_category.append(entities_for_rank)
 
     return results_category
 
-def get_results_event(event_id):
+def get_results_event(event_id, event_title):
     """
     Build a structure containing the information about a given event. Takes as input the event ID.
     """
@@ -96,23 +97,24 @@ def get_results_event(event_id):
 
     results_event['event_id'] = results_event_json['event']['id']
     results_event['event_label'] = results_event_json['event']['libelle']
+    results_event['event_title'] = event_title
 
     categories = dict()
 
     for category in results_event_json['categories']:
-        categories[category['label']] = get_results_category(category)
+        categories[category['label']] = get_results_category(category, event_title)
 
     results_event['categories'] = categories
 
     return results_event
 
-def get_results_events(event_ids):
+def get_results_events(config):
     """
     Build a structure containing the information about multiple events. Takes as input the list of event IDs.
     """
     results_events = []
 
-    for event_id in event_ids:
-        results_events.append(get_results_event(event_id))
+    for event_id, event_title in config.events.items():
+        results_events.append(get_results_event(event_id, event_title))
 
     return results_events
