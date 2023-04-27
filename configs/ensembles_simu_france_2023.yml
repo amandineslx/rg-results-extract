@@ -4,19 +4,21 @@ events:
   - title: PACA
     ids: 14342
   - title: Auvergne - Rhone Alpes
-    ids: 14510
+    ids: 14510,14509
+  - title: Bourgogne
+    ids: 14844,14845
   - title: Bretagne
-    ids: 14862
+    ids: 14862 # missing FA 29-30/04
   - title: Centre - Val de Loire
     ids: 14359
   - title: Corse
     ids: 14477
   - title: Grand Est
-    ids: 14459
+    ids: 14459 # missing FA 06-07/05
   - title: Guadeloupe
     ids: 14771
   - title: Hauts-de-France
-    ids: 14789
+    ids: 14789 # missing FA 07/05
   - title: Ile-de-France
     ids: 14661,14586
   - title: Martinique
@@ -24,6 +26,9 @@ events:
   - title: Normandie
     ids: 13890
   - title: Nouvelle-Aquitaine
-    ids: 13775
+    ids: 13775 # missing FA 30/04
   - title: Occitanie
     ids: 14905
+  - title: Pays de la Loire
+    ids: 14221
+# derniers resultats : https://resultats.ffgym.fr/derniers

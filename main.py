@@ -28,7 +28,7 @@ def build_config(event_config_file):
     config_yaml = load(open("./configs/" + event_config_file), Loader=Loader)
     config = Config(str(config_yaml['title']))
     reg_indicator = "false" if not 'ignore_regionals' in config_yaml else str(config_yaml['ignore_regionals'])
-    config.ignore_regionals = False if not reg_indicator else reg_indicator == "true"
+    config.ignore_regionals = False if not reg_indicator else reg_indicator == "True"
     for event in config_yaml['events']:
         config.add_event(str(event['title']), str(event['ids']))
     return config
@@ -43,4 +43,4 @@ def generate_results_file(config_file_name):
     write_results(vertical_ranking, config)
     print("Finished!")
 
-generate_results_file(EVENT_IDS['aix_2023'])
+generate_results_file(EVENT_IDS['simu_france_2023'])
