@@ -10,7 +10,7 @@ events:
   - title: Bretagne
     ids: 14862 # missing FA 29-30/04
   - title: Centre - Val de Loire
-    ids: 14359
+    ids: 14599
   - title: Corse
     ids: 14477
   - title: Grand Est
@@ -22,11 +22,11 @@ events:
   - title: Ile-de-France
     ids: 14661,14586
   - title: Martinique
-    ids: 14907
+    ids: 14908
   - title: Normandie
     ids: 13890
   - title: Nouvelle-Aquitaine
-    ids: 13775 # missing FA 30/04
+    ids: 13775,13776
   - title: Occitanie
     ids: 14905
   - title: Pays de la Loire
