@@ -8,17 +8,17 @@ events:
   - title: Bourgogne
     ids: 14844,14845
   - title: Bretagne
-    ids: 14862 # missing FA 29-30/04
+    ids: 14862
   - title: Centre - Val de Loire
     ids: 14599
   - title: Corse
     ids: 14477
   - title: Grand Est
-    ids: 14459 # missing FA 06-07/05
+    ids: 14459,14460
   - title: Guadeloupe
     ids: 14771
   - title: Hauts-de-France
-    ids: 14789 # missing FA 07/05
+    ids: 14789,14916
   - title: Ile-de-France
     ids: 14661,14586
   - title: Martinique
