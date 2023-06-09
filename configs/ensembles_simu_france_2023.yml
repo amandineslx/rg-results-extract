@@ -1,5 +1,6 @@
 title: ensembles_simu_france_2023
 ignore_regionals: true
+my_club: SPORTING CLUB MOUANS SARTOUX GYMNASTIQUE RYTHMIQUE
 events:
   - title: PACA
     ids: 14342

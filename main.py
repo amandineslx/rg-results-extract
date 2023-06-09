@@ -29,6 +29,7 @@ def build_config(event_config_file):
     config = Config(str(config_yaml['title']))
     reg_indicator = "false" if not 'ignore_regionals' in config_yaml else str(config_yaml['ignore_regionals'])
     config.ignore_regionals = False if not reg_indicator else reg_indicator == "True"
+    config.my_club = config_yaml['my_club']
     for event in config_yaml['events']:
         config.add_event(str(event['title']), str(event['ids']))
     return config
