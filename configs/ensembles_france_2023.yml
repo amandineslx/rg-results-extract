@@ -1,0 +1,9 @@
+title: ensembles_france_2023
+my_club: SPORTING CLUB MOUANS SARTOUX GYMNASTIQUE RYTHMIQUE
+events:
+  - title: Mouilleron-le-Captif
+    ids: 15020
+  - title: Mulhouse
+    ids: 15016
+  - title: Bourg-en-Bresse
+    ids: 14987
