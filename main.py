@@ -12,7 +12,8 @@ EVENT_IDS = {
   "aix_2023": "ensembles_interdep_2023_aix.yml",
   "istres_2023": "ensembles_regions_2023_istres.yml",
   "simu_france_2023": "ensembles_simu_france_2023.yml",
-  "france_2023": "ensembles_france_2023.yml"
+  "france_2023": "ensembles_france_2023.yml",
+  "salon_2023": "indiv_interdep_2023_salon.yml"
 }
 
 class Config:
@@ -45,4 +46,4 @@ def generate_results_file(config_file_name):
     write_results(vertical_ranking, config)
     print("Finished!")
 
-generate_results_file(EVENT_IDS['france_2023'])
+generate_results_file(EVENT_IDS['salon_2023'])

@@ -11,6 +11,8 @@ def get_results_event_json(event_id):
     url_event = URL_RESULTATS + str(event_id)
     response = requests.get(url = url_event)
     json = response.json()
+    if not json:
+        raise ValueError("No data associated to event %s, it is probably not published yet" % str(event_id))
     return json[0]
 
 # EXTRACTION FROM THE JSON RETRIEVED FROM THE WEBSITE
