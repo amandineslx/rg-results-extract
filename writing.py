@@ -33,7 +33,7 @@ def get_csv_line(
     initial_rank='Rang init',
     name='Nom',
     club='Club',
-    my_club='My club',
+    my_club='Mon club',
     db='DB',
     da='DA',
     artistry='A',
