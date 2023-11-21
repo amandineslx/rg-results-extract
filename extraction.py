@@ -120,7 +120,8 @@ def get_results_event(event_id, config):
             continue
         if config.ignore_regionals and _is_regional_category(category['label']):
             continue
-        categories[category['label']] = get_results_category(category, config.events[event_id])
+        categories[category['label']] = {}
+        categories[category['label']]['general'] = get_results_category(category, config.events[event_id])
 
     results_event['categories'] = categories
 

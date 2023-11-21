@@ -28,7 +28,8 @@ def merge_events(event1, event2):
     for category in categories:
         category1 = event1.get('categories', {}).get(category, [])
         category2 = event2.get('categories', {}).get(category, [])
-        merge['categories'][category] = merge_categories(event1, category1, event2, category2)
+        merge['categories'][category] = {}
+        merge['categories'][category]['general'] = merge_categories(event1, category1, event2, category2)
 
     return merge
 
@@ -41,10 +42,10 @@ def merge_categories(event1, category1, event2, category2):
         return []
     # if there are gymnasts in this category only in event 2
     if not category1:
-        return category2
+        return category2['general']
     # if there are gymnasts in this category only in event 1
     if not category2:
-        return category1
+        return category1['general']
 
     category = []
 
@@ -52,12 +53,12 @@ def merge_categories(event1, category1, event2, category2):
     i_cat2 = 0
 
     # iterate over the two categories in parallel
-    while i_cat1 < len(category1) and i_cat2 < len(category2):
-        gymnasts1 = category1[i_cat1]
+    while i_cat1 < len(category1['general']) and i_cat2 < len(category2['general']):
+        gymnasts1 = category1['general'][i_cat1]
         for gymnast in gymnasts1:
             gymnast['event_id'] = event1['event_id']
             gymnast['event_label'] = event1['event_label']
-        gymnasts2 = category2[i_cat2]
+        gymnasts2 = category2['general'][i_cat2]
         for gymnast in gymnasts2:
             gymnast['event_id'] = event2['event_id']
             gymnast['event_label'] = event2['event_label']
@@ -81,12 +82,12 @@ def merge_categories(event1, category1, event2, category2):
             i_cat2+=1
     # while there are remaining gymnasts in category 1
     # there will not be remaining gymnasts both in category 1 and 2 at the same time
-    while i_cat1 < len(category1):
-        category.append(category1[i_cat1])
+    while i_cat1 < len(category1['general']):
+        category.append(category1['general'][i_cat1])
         i_cat1+=1
     # while there are remaining gymnasts in category 2
-    while i_cat2 < len(category2):
-        category.append(category2[i_cat2])
+    while i_cat2 < len(category2['general']):
+        category.append(category2['general'][i_cat2])
         i_cat2+=1
 
     return category

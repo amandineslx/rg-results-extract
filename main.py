@@ -2,6 +2,7 @@ from yaml import Loader, load
 
 from extraction import get_results_events
 from merging import get_vertical_ranking
+from enriching import enrich_with_apparatus_rankings
 from writing import write_results
 
 EVENT_IDS = {
@@ -43,7 +44,8 @@ def generate_results_file(config_file_name):
     config = build_config(config_file_name)
     results = get_results_events(config)
     vertical_ranking = get_vertical_ranking(results)
-    write_results(vertical_ranking, config)
+    enriched_results = enrich_with_apparatus_rankings(vertical_ranking)
+    write_results(enriched_results, config)
     print("Finished!")
 
 generate_results_file(EVENT_IDS['salon_2023'])
