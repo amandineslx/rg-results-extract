@@ -1,6 +1,6 @@
 import csv,json
 
-def get_csv_line_from_entity_general_json(entity_json, category, display_name, my_club, first_entity_total, previous_entity_total):
+def get_csv_line_from_entity_general_json(entity_json, category, display_name, my_club, first_entity_total, previous_entity_total, multiple_apparatuses):
     """
     Generate a line to be written in the CSV file from the different structures built from the extraction and merging.
     """
@@ -24,14 +24,14 @@ def get_csv_line_from_entity_general_json(entity_json, category, display_name, m
         diff_cumul=round(entity_json['total'] - first_entity_total, 3)
         )
 
-def get_csv_line_from_entity_apparatus_json(entity_json, category, apparatus, my_club, first_entity_total, previous_entity_total):
+def get_csv_line_from_entity_apparatus_json(entity_json, category, apparatus, my_club, first_entity_total, previous_entity_total, multiple_apparatuses):
     """
     Generate a line to be written in the CSV file from the different structures built from the extraction and merging.
     """
     apparatus_json = entity_json['apparatuses'][apparatus]
     return get_csv_line(
         category=category,
-        apparatus=apparatus,
+        apparatus=apparatus if multiple_apparatuses else 'general/' + apparatus,
         rank=entity_json['rank'],
         event=entity_json['event'],
         initial_rank=entity_json['initial_rank'],
@@ -72,12 +72,19 @@ def get_csv_line(
     """
     return [category, apparatus, rank, event, initial_rank, name, club, my_club, db, da, artistry, execution, penalty, apparatus_total, total, diff_prec, diff_cumul]
 
-def write_general(category, display_name, ranking, writer, config, writing_method):
+def write_general(category, ranking, writer, config, multiple_apparatuses):
     my_club = config.my_club
 
     first_entity = ranking[0][0]
 
     previous_entity_total = -1
+
+    if multiple_apparatuses:
+        writing_method = get_csv_line_from_entity_general_json
+        apparatus = 'general'
+    else:
+        writing_method = get_csv_line_from_entity_apparatus_json
+        apparatus = list(first_entity['apparatuses'].keys())[0]
 
     # for each rank in the category
     rank = 1
@@ -91,8 +98,7 @@ def write_general(category, display_name, ranking, writer, config, writing_metho
         for entity in entities:
             # write score of the gymnast/team apparatus
             entity['rank'] = rank
-
-            writer.writerow(writing_method(entity, category, display_name, my_club, first_entity_total, previous_entity_total))
+            writer.writerow(writing_method(entity, category, apparatus, my_club, first_entity_total, previous_entity_total, multiple_apparatuses))
 
             # keep this gymnast/team score as the previous total to compute the difference between this gymnast/team and the next one
             previous_entity_total = entity['total']
@@ -114,7 +120,7 @@ def write_apparatus(category, apparatus, ranking, writer, config):
 
         # write score of the gymnast/team apparatus
         entity['rank'] = rank
-        writer.writerow(get_csv_line_from_entity_apparatus_json(entity, category, apparatus, my_club, first_entity_total, previous_entity_total))
+        writer.writerow(get_csv_line_from_entity_apparatus_json(entity, category, apparatus, my_club, first_entity_total, previous_entity_total, multiple_apparatuses=True))
 
         # keep this gymnast/team score as the previous total to compute the difference between this gymnast/team and the next one
         previous_entity_total = entity['apparatuses'][apparatus]['total']
@@ -147,13 +153,14 @@ def write_results(results_json, config):
 
             apparatuses = list(category_json['general'][0][0]['apparatuses'].keys())
 
+            multiple_apparatuses = False
+
             if len(apparatuses) > 1:
+                multiple_apparatuses = True
+
                 # for each apparatus in the category
                 # (all gymnasts/teams in the same category have the same apparatuses)
                 for apparatus in apparatuses:
                     write_apparatus(category, apparatus, category_json['apparatuses'][apparatus], writer, config)
 
-                write_general(category, 'general', results_json['categories'][category]['general'], writer, config, get_csv_line_from_entity_general_json)
-
-            else:
-                write_general(category, apparatuses[0], results_json['categories'][category]['general'], writer, config, get_csv_line_from_entity_apparatus_json)
+            write_general(category, results_json['categories'][category]['general'], writer, config, multiple_apparatuses)
