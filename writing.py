@@ -134,7 +134,9 @@ def write_results(results_json, config):
         previous_entity_total = 0
 
         # for each category in the event
-        for category in results_json['categories'].keys():
+        categories = list(results_json['categories'].keys())
+        categories.sort()
+        for category in categories:
             # write header line
             category_json = results_json['categories'][category]
 
