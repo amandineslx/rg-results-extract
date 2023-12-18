@@ -13,7 +13,7 @@ def get_results_event_json(event_id):
     payload = response.json()
     if not payload:
         raise ValueError("No data associated to event %s, it is probably not published yet" % str(event_id))
-    elif 'error' in jso:
+    elif 'error' in payload:
         raise ValueError("An error was raised with event %s: %s" % (str(event_id), payload['error']))
     return payload[0]
 
