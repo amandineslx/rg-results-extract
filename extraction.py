@@ -10,10 +10,12 @@ def get_results_event_json(event_id):
     """
     url_event = URL_RESULTATS + str(event_id)
     response = requests.get(url = url_event)
-    json = response.json()
-    if not json:
+    payload = response.json()
+    if not payload:
         raise ValueError("No data associated to event %s, it is probably not published yet" % str(event_id))
-    return json[0]
+    elif 'error' in jso:
+        raise ValueError("An error was raised with event %s: %s" % (str(event_id), payload['error']))
+    return payload[0]
 
 # EXTRACTION FROM THE JSON RETRIEVED FROM THE WEBSITE
 def get_mark_type_label(mark_type):
@@ -90,7 +92,7 @@ def get_results_category(category, event_title):
     return results_category
 
 def _is_regional_category(category_label):
-    return _category_contains_any_label(category_label, ["régional", "fédérale r", "regional"])
+    return _category_contains_any_label(category_label, ["régional", "fédérale r", "regional", "reg"])
 
 def _is_ignored_category(category_label):
     return _category_contains_any_label(category_label, ["nationale par equipe"])
@@ -134,6 +136,9 @@ def get_results_events(config):
     results_events = []
 
     for event_id, event_title in config.events.items():
-        results_events.append(get_results_event(event_id, config))
+        try:
+            results_events.append(get_results_event(event_id, config))
+        except ValueError as ve:
+            print(ve)
 
     return results_events

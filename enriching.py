@@ -1,4 +1,5 @@
 import json
+
 def enrich_with_apparatus_rankings(results):
     for category_name in results['categories'].keys():
         category = results['categories'][category_name]
@@ -15,7 +16,10 @@ def enrich_with_apparatus_rankings(results):
             # put all the gymnasts in there
             for rank in category['general']:
                 for entity in rank:
-                    entities.append(entity)
+                    if apparatus in entity['apparatuses']:
+                        entities.append(entity)
+                    else:
+                        print("/!\ Gymnast [%s] in category [%s] has been excluded from ranking with apparatus [%s] as she did not perform with it" % (entity["name"], category_name, apparatus))
 
             entities.sort(key=lambda e: float(e['apparatuses'][apparatus]['total']), reverse=True)
 

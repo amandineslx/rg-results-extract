@@ -1,0 +1,37 @@
+title: indiv_simufrance_2023
+ignore_regionals: true
+my_club: SPORTING CLUB MOUANS SARTOUX GYMNASTIQUE RYTHMIQUE
+events:
+  - title: PACA
+    ids: 16178
+  - title: Auvergne - Rhone Alpes
+    ids: 15418,15419
+  - title: Bourgogne
+    ids:
+  - title: Bretagne
+    ids: 16013
+  - title: Centre - Val de Loire
+    ids: 15679
+  - title: Corse
+    ids: 15353
+  - title: Grand Est
+    ids: 15339,15340
+  - title: Guadeloupe
+    ids: 16177
+  - title: Guyane
+    ids: 16108
+  - title: Hauts-de-France
+    ids: 15631
+  - title: Ile-de-France
+    ids: 15689
+  - title: Martinique
+    ids:
+  - title: Normandie
+    ids: 15247
+  - title: Nouvelle-Aquitaine
+    ids: 15408
+  - title: Occitanie
+    ids: 15385
+  - title: Pays de la Loire
+    ids:
+# derniers resultats : https://resultats.ffgym.fr/derniers

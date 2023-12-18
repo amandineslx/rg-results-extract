@@ -12,9 +12,11 @@ EVENT_IDS = {
   "mouans_2023": "ensembles_dep_2023_mouans.yml",
   "aix_2023": "ensembles_interdep_2023_aix.yml",
   "istres_2023": "ensembles_regions_2023_istres.yml",
-  "simu_france_2023": "ensembles_simu_france_2023.yml",
+  "ens_simu_france_2023": "ensembles_simu_france_2023.yml",
   "france_2023": "ensembles_france_2023.yml",
-  "salon_2023": "indiv_interdep_2023_salon.yml"
+  "salon_2023": "indiv_interdep_2023_salon.yml",
+  "vitrolles_2023": "indiv_regions_2023_vitrolles.yml",
+  "indiv_simu_france_2023": "indiv_simufrance_2023.yml"
 }
 
 class Config:
@@ -34,7 +36,8 @@ def build_config(event_config_file):
     config.ignore_regionals = False if not reg_indicator else reg_indicator == "True"
     config.my_club = config_yaml['my_club']
     for event in config_yaml['events']:
-        config.add_event(str(event['title']), str(event['ids']))
+        if 'ids' in event and event['ids']:
+            config.add_event(str(event['title']), str(event['ids']))
     return config
 
 def generate_results_file(config_file_name):
@@ -48,4 +51,4 @@ def generate_results_file(config_file_name):
     write_results(enriched_results, config)
     print("Finished!")
 
-generate_results_file(EVENT_IDS['salon_2023'])
+generate_results_file(EVENT_IDS['vitrolles_2023'])
