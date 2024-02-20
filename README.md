@@ -9,9 +9,7 @@ In particular, during inter-departemental competitions, gymnasts from French dep
 ## Execution
 
 * add configuration file with expected format in `configs` folder
-* add it in the mapping table in `main.py`
-* change the target of the `main.py` (last line)
-* run `python main.py` (Python 3.9 OK)
+* run `python main.py {config_file_name}` (Python 3.9 OK)
 
 ## Data source
 
