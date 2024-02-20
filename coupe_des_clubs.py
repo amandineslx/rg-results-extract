@@ -1,7 +1,5 @@
 from extraction import get_results_event_json
-import csv,json
-
-CONFIG_FILE_NAME = "vitrolles_2023.yml"
+import csv,json,sys
 
 class Club:
     def __init__(self):
@@ -48,8 +46,8 @@ def write_results(sorted_ranking):
                 row.append(format_gymnast_details(club_result['gymnasts'][3]))
             writer.writerow(row)
 
-def main():
-    config = json.load(open("./configs/coupe_des_clubs/" + CONFIG_FILE_NAME))
+def main(coupe_des_clubs_config_file):
+    config = json.load(open("./configs/coupe_des_clubs/" + coupe_des_clubs_config_file))
     event_json = get_results_event_json(EVENT_ID)
     for category_json in event_json['categories']:
         if not category_json['label'] in config.keys():
@@ -65,4 +63,5 @@ def main():
 
     print("Finished!")
 
-main()
+if __name__ == "__main__":
+    main(sys.argv[1])

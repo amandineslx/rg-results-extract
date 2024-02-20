@@ -1,13 +1,11 @@
 from yaml import Loader, load
 
+import sys
+
 from extraction import get_results_events
 from merging import get_vertical_ranking
 from enriching import enrich_with_apparatus_rankings
 from writing import write_results
-
-EVENT_IDS = {
-  "la_colle_2024": "ensembles_dep_2024_la_colle.yml"
-}
 
 class Config:
     def __init__(self, title):
@@ -41,4 +39,5 @@ def generate_results_file(config_file_name):
     write_results(enriched_results, config)
     print("Finished!")
 
-generate_results_file(EVENT_IDS['la_colle_2024'])
+if __name__ == "__main__":
+    generate_results_file(sys.argv[1])
