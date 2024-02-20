@@ -1,5 +1,5 @@
 from extraction import get_results_event_json
-import json, csv, math
+import json,csv
 
 CATEGORIES = {
   'Federale 10-11 ans GR': {'quota': 3, 'division': 'fed'},
@@ -42,18 +42,21 @@ def add_mark_for_club(club, gymnast_name, division, mark):
         COUPE_DES_CLUBS[club] = Club()
     COUPE_DES_CLUBS[club].add_mark(gymnast_name, division, mark)
 
+def format_gymnast_details(gymnast):
+    return str(gymnast[0]) + " - " + gymnast[1]
+
 def write_results(sorted_ranking):
     with open('./results/coupe des clubs '+str(EVENT_ID)+'.csv', 'w', encoding='cp1252') as f:
         writer = csv.writer(f)
         writer.writerow(["Club", "Total", "Gymnast 1", "Gymnast 2", "Gymnast 3", "Gymnast 4"])
         for club in sorted_ranking.keys():
             club_result = sorted_ranking[club].get_result()
-            row = [club, club_result['total']]
+            row = [club, round(club_result['total'],3)]
             if len(club_result['gymnasts']) > 0:
-                row.append(club_result['gymnasts'][0])
-                row.append(club_result['gymnasts'][1])
-                row.append(club_result['gymnasts'][2])
-                row.append(club_result['gymnasts'][3])
+                row.append(format_gymnast_details(club_result['gymnasts'][0]))
+                row.append(format_gymnast_details(club_result['gymnasts'][1]))
+                row.append(format_gymnast_details(club_result['gymnasts'][2]))
+                row.append(format_gymnast_details(club_result['gymnasts'][3]))
             writer.writerow(row)
 
 def main():

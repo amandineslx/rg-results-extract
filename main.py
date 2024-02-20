@@ -6,17 +6,7 @@ from enriching import enrich_with_apparatus_rankings
 from writing import write_results
 
 EVENT_IDS = {
-  "la_colle_2022": "indiv_dep_2022_la_colle.yml",
-  "sollies_2022": "indiv_interdep_2022_sollies.yml",
-  "vitrolles_2022": "indiv_regions_2022_vitrolles.yml",
-  "mouans_2023": "ensembles_dep_2023_mouans.yml",
-  "aix_2023": "ensembles_interdep_2023_aix.yml",
-  "istres_2023": "ensembles_regions_2023_istres.yml",
-  "ens_simu_france_2023": "ensembles_simu_france_2023.yml",
-  "france_2023": "ensembles_france_2023.yml",
-  "salon_2023": "indiv_interdep_2023_salon.yml",
-  "vitrolles_2023": "indiv_regions_2023_vitrolles.yml",
-  "indiv_simu_france_2023": "indiv_simufrance_2023.yml"
+  "la_colle_2024": "ensembles_dep_2024_la_colle.yml"
 }
 
 class Config:
@@ -51,4 +41,4 @@ def generate_results_file(config_file_name):
     write_results(enriched_results, config)
     print("Finished!")
 
-generate_results_file(EVENT_IDS['vitrolles_2023'])
+generate_results_file(EVENT_IDS['la_colle_2024'])

@@ -7,7 +7,7 @@ events:
   - title: Auvergne - Rhone Alpes
     ids: 15418,15419
   - title: Bourgogne
-    ids:
+    ids: 15690
   - title: Bretagne
     ids: 16013
   - title: Centre - Val de Loire
