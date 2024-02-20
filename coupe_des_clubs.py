@@ -22,8 +22,6 @@ class Club:
 
 COUPE_DES_CLUBS = {}
 
-EVENT_ID = 16178
-
 def add_mark_for_club(club, gymnast_name, division, mark):
     if not club in COUPE_DES_CLUBS.keys():
         COUPE_DES_CLUBS[club] = Club()
@@ -32,8 +30,8 @@ def add_mark_for_club(club, gymnast_name, division, mark):
 def format_gymnast_details(gymnast):
     return str(gymnast[0]) + " - " + gymnast[1]
 
-def write_results(sorted_ranking):
-    with open('./results/coupe des clubs '+str(EVENT_ID)+'.csv', 'w', encoding='cp1252') as f:
+def write_results(event_id, sorted_ranking):
+    with open('./results/coupe des clubs '+str(event_id)+'.csv', 'w', encoding='cp1252') as f:
         writer = csv.writer(f)
         writer.writerow(["Club", "Total", "Gymnast 1", "Gymnast 2", "Gymnast 3", "Gymnast 4"])
         for club in sorted_ranking.keys():
@@ -48,18 +46,20 @@ def write_results(sorted_ranking):
 
 def main(coupe_des_clubs_config_file):
     config = json.load(open("./configs/coupe_des_clubs/" + coupe_des_clubs_config_file))
-    event_json = get_results_event_json(EVENT_ID)
+    categories = config['categories']
+    event_id = config['eventId']
+    event_json = get_results_event_json(event_id)
     for category_json in event_json['categories']:
-        if not category_json['label'] in config.keys():
+        if not category_json['label'] in categories.keys():
             continue
-        quota_category = config[category_json['label']]['quota']
+        quota_category = categories[category_json['label']]['quota']
         category_without_qualified = category_json['entities'][quota_category:]
         for gymnast in category_without_qualified:
-            add_mark_for_club(gymnast['club'], gymnast['firstname'] + ' ' + gymnast['lastname'] + ' (' + category_json['label'] + ')', config[category_json['label']]['division'], float(gymnast['mark']['value']))
+            add_mark_for_club(gymnast['club'], gymnast['firstname'] + ' ' + gymnast['lastname'] + ' (' + category_json['label'] + ')', categories[category_json['label']]['division'], float(gymnast['mark']['value']))
 
     ranking = dict(sorted(COUPE_DES_CLUBS.items(), reverse=True, key=lambda c:c[1].get_result()['total']))
 
-    write_results(ranking)
+    write_results(event_id, ranking)
 
     print("Finished!")
 
