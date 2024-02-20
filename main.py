@@ -1,4 +1,4 @@
-from yaml import Loader, load
+from yaml import Loader,load
 
 import sys
 
