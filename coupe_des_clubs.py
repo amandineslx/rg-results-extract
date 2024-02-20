@@ -1,18 +1,7 @@
 from extraction import get_results_event_json
-import json,csv
+import csv,json
 
-CATEGORIES = {
-  'Federale 10-11 ans GR': {'quota': 3, 'division': 'fed'},
-  'Federale 12-13 ans GR': {'quota': 2, 'division': 'fed'},
-  'Federale 14-15 ans GR': {'quota': 4, 'division': 'fed'},
-  'Federale 16-17 ans GR': {'quota': 2, 'division': 'fed'},
-  'Federale 18 ans et plus GR': {'quota': 3, 'division': 'fed'},
-  'Nationale C 10-11 ans GR': {'quota': 5, 'division': 'nat'},
-  'Nationale C 12-13 ans GR': {'quota': 3, 'division': 'nat'},
-  'Nationale C 14-15 ans GR': {'quota': 3, 'division': 'nat'},
-  'Nationale C 16-17 ans GR': {'quota': 4, 'division': 'nat'},
-  'Nationale C 18 ans et plus GR': {'quota': 3, 'division': 'nat'}
-}
+CONFIG_FILE_NAME = "vitrolles_2023.yml"
 
 class Club:
     def __init__(self):
@@ -60,14 +49,15 @@ def write_results(sorted_ranking):
             writer.writerow(row)
 
 def main():
+    config = json.load(open("./configs/coupe_des_clubs/" + CONFIG_FILE_NAME))
     event_json = get_results_event_json(EVENT_ID)
     for category_json in event_json['categories']:
-        if not category_json['label'] in CATEGORIES.keys():
+        if not category_json['label'] in config.keys():
             continue
-        quota_category = CATEGORIES[category_json['label']]['quota']
+        quota_category = config[category_json['label']]['quota']
         category_without_qualified = category_json['entities'][quota_category:]
         for gymnast in category_without_qualified:
-            add_mark_for_club(gymnast['club'], gymnast['firstname'] + ' ' + gymnast['lastname'] + ' (' + category_json['label'] + ')', CATEGORIES[category_json['label']]['division'], float(gymnast['mark']['value']))
+            add_mark_for_club(gymnast['club'], gymnast['firstname'] + ' ' + gymnast['lastname'] + ' (' + category_json['label'] + ')', config[category_json['label']]['division'], float(gymnast['mark']['value']))
 
     ranking = dict(sorted(COUPE_DES_CLUBS.items(), reverse=True, key=lambda c:c[1].get_result()['total']))
 
