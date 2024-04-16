@@ -1,0 +1,35 @@
+title: ensembles_simu_france_2024
+ignore_regionals: true
+my_club: SPORTING CLUB MOUANS SARTOUX GYMNASTIQUE RYTHMIQUE
+events:
+  - title: PACA
+    ids: 16632
+  #- title: Auvergne - Rhone Alpes
+    #ids: 14510,14509
+  - title: Bourgogne
+    ids: 16600,16597,16596
+  #- title: Bretagne
+    #ids: 14862
+  - title: Centre - Val de Loire
+    ids: 15747
+  - title: Corse
+    ids: 16416
+  - title: Grand Est
+    ids: 15651
+  - title: Guadeloupe
+    ids: 16779
+  - title: Hauts-de-France
+    ids: 16639,16699,16700
+  #- title: Ile-de-France
+    #ids: 14661,14586
+  #- title: Martinique
+    #ids: 14908
+  - title: Normandie
+    ids: 16093,16245
+  #- title: Nouvelle-Aquitaine
+    #ids: 13775,13776
+  - title: Occitanie
+    ids: 16578
+  #- title: Pays de la Loire
+    #ids: 14221
+# derniers resultats : https://resultats.ffgym.fr/derniers
