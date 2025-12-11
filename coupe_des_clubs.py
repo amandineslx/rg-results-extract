@@ -1,4 +1,6 @@
-from extraction import get_results_event_json
+from extraction import get_results_event_json, get_results_events
+from merging import merge_events, get_vertical_ranking
+from main import Config
 import csv,json,sys
 
 class Club:
@@ -44,22 +46,30 @@ def write_results(event_id, sorted_ranking):
                 row.append(format_gymnast_details(club_result['gymnasts'][3]))
             writer.writerow(row)
 
+def get_merged_event_results(event_title, event_ids):
+    config = Config(event_title)
+    config.ignore_regionals = True
+    for event_id in event_ids:
+        config.add_event(str(event_id), str(event_id))
+    results = get_results_events(config)
+    return get_vertical_ranking(results)
+
 def main(coupe_des_clubs_config_file):
     config = json.load(open("./configs/coupe_des_clubs/" + coupe_des_clubs_config_file))
     categories = config['categories']
-    event_id = config['eventId']
-    event_json = get_results_event_json(event_id)
-    for category_json in event_json['categories']:
-        if not category_json['label'] in categories.keys():
+    event_json = get_merged_event_results(coupe_des_clubs_config_file, config['eventIds'])
+    for category_name in event_json['categories']:
+        category_json = event_json['categories'][category_name]
+        if not category_name in categories.keys():
             continue
-        quota_category = categories[category_json['label']]['quota']
-        category_without_qualified = category_json['entities'][quota_category:]
+        quota_category = categories[category_name]['quota']
+        category_without_qualified = category_json['general'][quota_category:]
         for gymnast in category_without_qualified:
-            add_mark_for_club(gymnast['club'], gymnast['firstname'] + ' ' + gymnast['lastname'] + ' (' + category_json['label'] + ')', categories[category_json['label']]['division'], float(gymnast['mark']['value']))
+            add_mark_for_club(gymnast[0]['club'], gymnast[0]['name'] + ' (' + category_name + ')', categories[category_name]['division'], float(gymnast[0]['total']))
 
     ranking = dict(sorted(COUPE_DES_CLUBS.items(), reverse=True, key=lambda c:c[1].get_result()['total']))
 
-    write_results(event_id, ranking)
+    write_results(str(config['eventIds'][0]), ranking)
 
     print("Finished!")
 
