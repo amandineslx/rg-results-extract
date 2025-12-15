@@ -1,5 +1,7 @@
-title: indiv_reg-fed_2025_martigues
+title: indiv_2025_martigues-istres
 my_club: SPORTING CLUB MOUANS SARTOUX GYMNASTIQUE RYTHMIQUE
 events:
-  - title: PACA
+  - title: Fed
     ids: 19849
+  - title: Nat
+    ids: 19875
