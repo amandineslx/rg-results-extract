@@ -6,16 +6,7 @@ from extraction import get_results_events
 from merging import merge_event_list
 from enriching import enrich_with_apparatus_rankings
 from writing import write_results
-
-class Config:
-    def __init__(self, title):
-        self.title = title
-        self.ignore_regionals = False
-        self.events = dict()
-
-    def add_event(self, event_title, event_ids):
-        for event_id in event_ids.split(','):
-            self.events[event_id] = event_title
+from model import Config
 
 def build_config(event_config_file):
     config_yaml = load(open("./configs/" + event_config_file), Loader=Loader)

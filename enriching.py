@@ -1,5 +1,3 @@
-import json
-
 def enrich_with_apparatus_rankings(event):
     for category_name in event.categories.keys():
         category = event.get_category(category_name)

@@ -1,4 +1,4 @@
-from model import Event, Category, Entity
+from model import Event, Category
 
 def merge_event_list(events):
     """

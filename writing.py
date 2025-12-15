@@ -1,4 +1,4 @@
-import csv,json
+import csv
 
 def get_csv_line_from_entity_general_json(entity, category, display_name, my_club, first_entity_total, previous_entity_total, multiple_apparatuses):
     """
@@ -84,7 +84,7 @@ def write_general(category, ranking, writer, config, multiple_apparatuses):
         apparatus = 'general'
     else:
         writing_method = get_csv_line_from_entity_apparatus_json
-        apparatus = list(category.get_apparatus_names())[0]
+        apparatus = category.get_apparatus_names()[0]
 
     # for each rank in the category
     rank = 1
@@ -140,7 +140,7 @@ def write_results(event, config):
         previous_entity_total = 0
 
         # for each category in the event
-        categorie_names = list(event.get_category_names())
+        categorie_names = event.get_category_names()
         categorie_names.sort()
         for category_name in categorie_names:
             # write header line

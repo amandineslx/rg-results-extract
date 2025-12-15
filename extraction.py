@@ -1,10 +1,9 @@
-import requests,json
+import requests
 
 from model import Event, Category, Entity, Apparatus
 from common import is_regional_category, is_ignored_category, format_mark
 
 URL_RESULTATS = "https://resultats.ffgym.fr/api/palmares/evenement/"
-MARK_TYPES = {'DB': 'DB', 'DA': 'DA', 'Art.': 'A', 'Exé.': 'E', 'Pén.': 'P'}
 
 # EXTRACTION FROM THE FFGYM WEBSITE
 def get_results_event_json(event_id):

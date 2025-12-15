@@ -21,7 +21,7 @@ class Event:
         self.categories[category.label] = category
 
     def get_category_names(self):
-        return self.categories.keys()
+        return list(self.categories.keys())
 
     def get_category(self, category_name):
         return self.categories[category_name]
@@ -54,7 +54,7 @@ class Category:
         return len(self.general_ranking[0]) == 0
 
     def get_apparatus_names(self):
-        return self.general_ranking[0][0].apparatuses.keys()
+        return list(self.general_ranking[0][0].apparatuses.keys())
 
     def to_string(self):
         s = f'---Category\nLabel: {self.label}, General ranking:\n'
@@ -120,3 +120,22 @@ class Apparatus:
 
     def to_string(self):
         return f'---Apparatus\nTotal: {self.total}, DB: {self.db}, DA: {self.da}, A: {self.artistry}, E: {self.execution}, P: {self.penalty}'
+
+class Club:
+    def __init__(self):
+        self.nat = []
+        self.fed = []
+
+    def get_result(self):
+        nationales = sorted(self.nat, reverse=True)
+        federales = sorted(self.fed, reverse=True)
+        if not nationales or not federales or len(federales) < 3:
+            return {"gymnasts": [], "total": 0}
+        gymnasts = [nationales[0], federales[0], federales[1], federales[2]]
+        return {"gymnasts": gymnasts, "total": sum(mark for mark,_ in gymnasts)}
+
+    def add_mark(self, gymnast_name, division, mark):
+        if division == 'fed':
+            self.fed.append((mark, gymnast_name))
+        elif division == 'nat':
+            self.nat.append((mark, gymnast_name))
