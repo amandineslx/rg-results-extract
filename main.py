@@ -3,7 +3,7 @@ from yaml import Loader,load
 import sys
 
 from extraction import get_results_events
-from merging import get_vertical_ranking
+from merging import merge_event_list
 from enriching import enrich_with_apparatus_rankings
 from writing import write_results
 
@@ -33,9 +33,11 @@ def generate_results_file(config_file_name):
     Take the event IDs as input, build a structure containing the information about the different apparatuses for the different gymnasts in the different categories, merge the event results together and write the consolidated results in a CSV file.
     """
     config = build_config(config_file_name)
-    results = get_results_events(config)
-    vertical_ranking = get_vertical_ranking(results)
-    enriched_results = enrich_with_apparatus_rankings(vertical_ranking)
+    events = get_results_events(config)
+    for event in events:
+        print(event.to_string())
+    merged_event = merge_event_list(events)
+    enriched_results = enrich_with_apparatus_rankings(merged_event)
     write_results(enriched_results, config)
     print("Finished!")
 

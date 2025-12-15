@@ -1,37 +1,48 @@
-def get_vertical_ranking(events_results):
+from model import Event, Category, Entity
+
+def merge_event_list(events):
     """
     Get the merged ranking between all the provided event results.
     """
-    if len(events_results) == 1:
-        return events_results[0]
+    if len(events) == 1:
+        return events[0]
 
-    vertical_ranking = dict()
+    merged_event = events[0]
 
-    for event in events_results:
-        vertical_ranking = merge_events(vertical_ranking, event)
+    for event in events[1:]:
+        merged_event = merge_events(merged_event, event)
 
-    return vertical_ranking
+    return merged_event
 
 def merge_events(event1, event2):
     """
     Merge the rankings of two events.
     """
-    merge = dict()
+    merged_event = Event(
+        '-'.join([str(event1.id), str(event2.id)]) if event1.id else event2.id,
+        f"Classement vertical events [{','.join([str(event1.id), str(event2.id)]) if event1.id else event2.id}]",
+        ""
+    )
 
-    merge['event_id'] = '-'.join([str(event1['event_id']), str(event2['event_id'])]) if event1.get('event_id') else event2['event_id']
-    merge['event_label'] = f"Classement vertical events [{','.join([str(event1['event_id']), str(event2['event_id'])]) if event1.get('event_id') else event2['event_id']}]"
+    category_names = set(event1.categories.keys()).union(set(event2.categories.keys()))
 
-    merge['categories'] = dict()
+    for category_name in category_names:
+        category1 = event1.categories.get(category_name, None)
+        category2 = event2.categories.get(category_name, None)
 
-    categories = set(event1.get('categories', {}).keys()).union(set(event2.get('categories', {}).keys()))
+        if category1:
+            for rank in category1.general_ranking:
+                for entity in rank:
+                    entity.event_label = event1.label
+        if category2:
+            for rank in category2.general_ranking:
+                for entity in rank:
+                    entity.event_label = event2.label
 
-    for category in categories:
-        category1 = event1.get('categories', {}).get(category, [])
-        category2 = event2.get('categories', {}).get(category, [])
-        merge['categories'][category] = {}
-        merge['categories'][category]['general'] = merge_categories(event1, category1, event2, category2)
+        category = merge_categories(event1, category1, event2, category2)
+        merged_event.add_category(merge_categories(event1, category1, event2, category2))
 
-    return merge
+    return merged_event
 
 def merge_categories(event1, category1, event2, category2):
     """
@@ -39,74 +50,68 @@ def merge_categories(event1, category1, event2, category2):
     """
     # if both categories from the two events are empty (should not happen)
     if not category1 and not category2:
-        return []
+        return None
     # if there are gymnasts in this category only in event 2
     if not category1:
-        return category2['general']
+        return category2
     # if there are gymnasts in this category only in event 1
     if not category2:
-        return category1['general']
+        return category1
 
-    category = []
+    merged_category = Category(category1.label)
 
     i_cat1 = 0
     i_cat2 = 0
 
     # iterate over the two categories in parallel
-    while i_cat1 < len(category1['general']) and i_cat2 < len(category2['general']):
-        gymnasts1 = category1['general'][i_cat1]
-        for gymnast in gymnasts1:
-            gymnast['event_id'] = event1['event_id']
-            gymnast['event_label'] = event1['event_label']
-        gymnasts2 = category2['general'][i_cat2]
-        for gymnast in gymnasts2:
-            gymnast['event_id'] = event2['event_id']
-            gymnast['event_label'] = event2['event_label']
+    while i_cat1 < len(category1.general_ranking) and i_cat2 < len(category2.general_ranking):
+        entities1 = category1.general_ranking[i_cat1]
+        entities2 = category2.general_ranking[i_cat2]
 
-        comparison = compare_gymnasts_lists(gymnasts1, gymnasts2)
-        # if the scores of both lists of ex aequo gymnasts are the same
+        comparison = compare_entities_lists(entities1, entities2)
+        # if the scores of both lists of ex aequo entities are the same
         if comparison == 0:
-            # concatenate the lists of gymnasts and add them to the category list
-            gymnasts = gymnasts1 + gymnasts2
-            category.append(gymnasts)
+            # concatenate the lists of entities and add them to the category list
+            entities = entities1 + entities2
+            merged_category.general_ranking.append(entities)
             # increase both iterators
             i_cat1+=1
             i_cat2+=1
         elif comparison < 0:
-            # if ex aequo gymnasts from event 1 have a best score than ex aequo gymnasts from event 2
-            category.append(gymnasts1)
+            # if ex aequo entities from event 1 have a best score than ex aequo entities from event 2
+            merged_category.general_ranking.append(entities1)
             i_cat1+=1
         elif comparison > 0:
-            # if ex aequo gymnasts from event 2 have a best score than ex aequo gymnasts from event 1
-            category.append(gymnasts2)
+            # if ex aequo entities from event 2 have a best score than ex aequo entities from event 1
+            merged_category.general_ranking.append(entities2)
             i_cat2+=1
-    # while there are remaining gymnasts in category 1
-    # there will not be remaining gymnasts both in category 1 and 2 at the same time
-    while i_cat1 < len(category1['general']):
-        category.append(category1['general'][i_cat1])
+    # while there are remaining entities in category 1
+    # there will not be remaining entities both in category 1 and 2 at the same time
+    while i_cat1 < len(category1.general_ranking):
+        merged_category.general_ranking.append(category1.general_ranking[i_cat1])
         i_cat1+=1
-    # while there are remaining gymnasts in category 2
-    while i_cat2 < len(category2['general']):
-        category.append(category2['general'][i_cat2])
+    # while there are remaining entities in category 2
+    while i_cat2 < len(category2.general_ranking):
+        merged_category.general_ranking.append(category2.general_ranking[i_cat2])
         i_cat2+=1
 
-    return category
+    return merged_category
 
-def compare_gymnasts_lists(gymnasts1, gymnasts2):
+def compare_entities_lists(entities1, entities2):
     """
-    Compare the scores of the ex aequo gymnasts from event 1 with the score of the ex aequo gymnasts from event 2.
+    Compare the scores of the ex aequo entities from event 1 with the score of the ex aequo entities from event 2.
     """
-    gymnast1 = gymnasts1[0] if gymnasts1 else None
-    gymnast2 = gymnasts2[0] if gymnasts2 else None
-    if not gymnast1 and not gymnast2:
-        raise Exception("Both gymnasts to be compared are None")
-    if not gymnast1:
+    entity1 = entities1[0] if entities1 else None
+    entity2 = entities2[0] if entities2 else None
+    if not entity1 and not entity2:
+        raise Exception("Both entities to be compared are None")
+    if not entity1:
         return 1
-    if not gymnast2:
+    if not entity2:
         return -1
 
-    gym1_total = gymnast1['total']
-    gym2_total = gymnast2['total']
+    gym1_total = entity1.total
+    gym2_total = entity2.total
 
     if gym1_total > gym2_total:
         return -1

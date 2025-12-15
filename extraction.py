@@ -1,4 +1,7 @@
-import requests
+import requests,json
+
+from model import Event, Category, Entity, Apparatus
+from common import is_regional_category, is_ignored_category, format_mark
 
 URL_RESULTATS = "https://resultats.ffgym.fr/api/palmares/evenement/"
 MARK_TYPES = {'DB': 'DB', 'DA': 'DA', 'Art.': 'A', 'Exé.': 'E', 'Pén.': 'P'}
@@ -18,57 +21,38 @@ def get_results_event_json(event_id):
     return payload[0]
 
 # EXTRACTION FROM THE JSON RETRIEVED FROM THE WEBSITE
-def get_mark_type_label(mark_type):
-    """
-    Get the final mark type label corresponding to a FFGym mark type label.
-    """
-    return MARK_TYPES[mark_type]
-
-def format_mark(mark):
-    """
-    Format the mark to remove additional decimals.
-    """
-    return float(mark)
-
-def get_results_apparatus(passage):
+def get_results_apparatus(apparatus):
     """
     Build a structure containing the marks for a given apparatus for a given gymnast/team. Takes as input the passageMarks JSON structure from the input JSON.
     """
-    results_passage = dict()
+    results_apparatus = Apparatus()
 
-    for mark in passage['corpsMarks']:
-        if mark['corps'] in MARK_TYPES.keys():
-            results_passage[get_mark_type_label(mark['corps'])] = format_mark(mark['value'])
+    for mark in apparatus['corpsMarks']:
+        results_apparatus.set_corps_mark(mark['corps'], mark['value'])
 
-    return results_passage
+    return results_apparatus
 
 def get_results_entity(entity, event_title):
     """
     Build a structure containing the information about a given gymnast/team. Takes as input the entity in the palmares JSON structure from the input JSON.
     """
-    results_entity = dict()
-
-    if 'firstname' in entity and 'lastname' in entity:
-        results_entity['name'] = entity['lastname'] + ' ' + entity['firstname']
-    else:
-        results_entity['name'] = entity['club'] + ' - ' + entity['label']
-
-    results_entity['event'] = event_title
-    results_entity['club'] = entity['club']
-    results_entity['initial_rank'] = entity['markRank']
-
     entity_mark = entity['mark']
-    results_entity['total'] = format_mark(entity_mark['value'])
-    results_entity_apparatuses = dict()
+
+    results_entity = Entity(_build_entity_name(entity), event_title, entity['club'], entity['markRank'], format_mark(entity_mark['value']))
 
     for mark in entity_mark['appMarks']:
         apparatus_label = mark['labelApp'].lower()
-        results_entity_apparatuses[apparatus_label] = get_results_apparatus(mark['passageMarks'][0])
-        results_entity_apparatuses[apparatus_label]['total'] = format_mark(mark['value'])
-
-    results_entity['apparatuses'] = results_entity_apparatuses
+        apparatus = get_results_apparatus(mark['passageMarks'][0])
+        apparatus.total = format_mark(mark['value'])
+        results_entity.add_apparatus(apparatus_label, apparatus)
 
     return results_entity
+
+def _build_entity_name(entity):
+    if 'firstname' in entity and 'lastname' in entity:
+        return entity['lastname'] + ' ' + entity['firstname']
+    else:
+        return entity['club'] + ' - ' + entity['label']
 
 def get_results_category(category, event_title):
     """
@@ -91,41 +75,22 @@ def get_results_category(category, event_title):
 
     return results_category
 
-def _is_regional_category(category_label):
-    return _category_contains_any_label(category_label, ["régional", "fédérale r", "regional", "reg"])
-
-def _is_ignored_category(category_label):
-    return _category_contains_any_label(category_label, ["nationale par equipe"])
-
-def _category_contains_any_label(category_label, labels):
-    for label in labels:
-        if label in category_label.lower():
-            return True
-    return False
-
-def get_results_event(event_id, config):
+def get_results_event(event_id, event_title, config):
     """
     Build a structure containing the information about a given event. Takes as input the event ID.
     """
     results_event_json = get_results_event_json(event_id)
 
-    results_event = dict()
-
-    results_event['event_id'] = results_event_json['event']['id']
-    results_event['event_label'] = results_event_json['event']['libelle']
-    results_event['event_title'] = config.title
-
-    categories = dict()
+    results_event = Event(results_event_json['event']['id'], event_title, config.title)
 
     for category in results_event_json['categories']:
-        if _is_ignored_category(category['label']):
+        if is_ignored_category(category['label']):
             continue
-        if config.ignore_regionals and _is_regional_category(category['label']):
+        if config.ignore_regionals and is_regional_category(category['label']):
             continue
-        categories[category['label']] = {}
-        categories[category['label']]['general'] = get_results_category(category, config.events[event_id])
-
-    results_event['categories'] = categories
+        results_category = Category(category['label'])
+        results_category.general_ranking = get_results_category(category, config.events[event_id])
+        results_event.add_category(results_category)
 
     return results_event
 
@@ -137,7 +102,7 @@ def get_results_events(config):
 
     for event_id, event_title in config.events.items():
         try:
-            results_events.append(get_results_event(event_id, config))
+            results_events.append(get_results_event(event_id, event_title, config))
         except ValueError as ve:
             print(ve)
 
