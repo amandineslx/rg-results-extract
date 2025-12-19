@@ -47,7 +47,8 @@ def main(coupe_des_clubs_config_file):
         quota_category = config_categories[category_name]['quota']
         category_without_qualified = category.general_ranking[quota_category:]
         for rank in category_without_qualified:
-            add_mark_for_club(rank[0].club, rank[0].name + ' (' + category_name + ')', config_categories[category_name]['division'], rank[0].total)
+            for gymnast in rank:
+                add_mark_for_club(gymnast.club, gymnast.name + ' (' + category_name + ')', config_categories[category_name]['division'], gymnast.total)
 
     ranking = dict(sorted(COUPE_DES_CLUBS.items(), reverse=True, key=lambda c:c[1].get_result()['total']))
 

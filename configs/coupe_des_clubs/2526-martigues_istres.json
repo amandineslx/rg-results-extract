@@ -2,15 +2,15 @@
   "eventIds": [19849,19875],
   "year": 2025,
   "categories": {
-    "Federale 10-11 ans GR": {"quota": 3, "division": "fed"},
-    "Federale 12-13 ans GR": {"quota": 3, "division": "fed"},
+    "Federale 10-11 ans GR": {"quota": 4, "division": "fed"},
+    "Federale 12-13 ans GR": {"quota": 4, "division": "fed"},
     "Federale 14-15 ans GR": {"quota": 3, "division": "fed"},
     "Federale 16-17 ans GR": {"quota": 3, "division": "fed"},
-    "Federale 18 ans et plus GR": {"quota": 2, "division": "fed"},
-    "Nationale C 10-11 ans GR": {"quota": 4, "division": "nat"},
+    "Federale 18 ans et plus GR": {"quota": 3, "division": "fed"},
+    "Nationale C 10-11 ans GR": {"quota": 5, "division": "nat"},
     "Nationale C 12-13 ans GR": {"quota": 3, "division": "nat"},
-    "Nationale C 14-15 ans GR": {"quota": 3, "division": "nat"},
-    "Nationale C 16-17 ans GR": {"quota": 4, "division": "nat"},
-    "Nationale C 18 ans et plus GR": {"quota": 3, "division": "nat"}
+    "Nationale C 14-15 ans GR": {"quota": 4, "division": "nat"},
+    "Nationale C 16-17 ans GR": {"quota": 5, "division": "nat"},
+    "Nationale C 18 ans et plus GR": {"quota": 4, "division": "nat"}
   }
 }
