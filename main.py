@@ -24,11 +24,13 @@ def generate_results_file(config_file_name):
     Take the event IDs as input, build a structure containing the information about the different apparatuses for the different gymnasts in the different categories, merge the event results together and write the consolidated results in a CSV file.
     """
     config = build_config(config_file_name)
+    print("Config built from input file")
     events = get_results_events(config)
-    for event in events:
-        print(event.to_string())
+    print("Events data extracted")
     merged_event = merge_event_list(events)
+    print("Events merged")
     enriched_results = enrich_with_apparatus_rankings(merged_event)
+    print("Data enriched")
     write_results(enriched_results, config)
     print("Finished!")
 

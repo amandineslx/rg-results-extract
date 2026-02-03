@@ -31,7 +31,7 @@ def get_csv_line_from_entity_apparatus_json(entity, category, apparatus_name, my
     apparatus = entity.apparatuses[apparatus_name]
     return get_csv_line(
         category=category.label,
-        apparatus=apparatus if multiple_apparatuses else 'general/' + apparatus_name,
+        apparatus=apparatus_name if multiple_apparatuses else 'general/' + apparatus_name,
         rank=entity.rank,
         event=entity.event_label,
         initial_rank=entity.initial_rank,

@@ -13,7 +13,7 @@ def enrich_with_apparatus_rankings(event):
                     if apparatus in entity.get_apparatus_names():
                         category.add_entity_apparatus_to_apparatus_ranking(apparatus, entity)
                     else:
-                        print(f"/!\ Gymnast [{entity['name']}] in category [{category_name}] has been excluded from ranking with apparatus [{apparatus}] as she did not perform with it")
+                        print(f"/!\\ Gymnast [{entity.name}] in category [{category_name}] has been excluded from ranking with apparatus [{apparatus}] as she did not perform with it")
 
         category.sort_apparatus_rankings()
 

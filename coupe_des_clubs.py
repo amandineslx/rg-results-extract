@@ -28,31 +28,42 @@ def write_results(year, sorted_ranking):
                 row.append(format_gymnast_details(club_result['gymnasts'][3]))
             writer.writerow(row)
 
-def get_merged_event_results(event_title, event_ids):
+def build_config(event_title, event_ids, categories):
     config = Config(event_title)
     config.ignore_regionals = True
     for event_id in event_ids:
         config.add_event(str(event_id), str(event_id))
+    config.quotas = categories
+    return config
+
+def get_merged_event_results(config):
     events = get_results_events(config)
+    print("Events data extracted")
     return merge_event_list(events)
 
-def main(coupe_des_clubs_config_file):
-    config = json.load(open("./configs/coupe_des_clubs/" + coupe_des_clubs_config_file))
-    config_categories = config['categories']
-    event = get_merged_event_results(coupe_des_clubs_config_file, config['eventIds'])
+def compute_cdc_results(event, config):
     for category_name in event.get_category_names():
         category = event.categories[category_name]
-        if not category_name in config_categories.keys():
+        if not category_name in config.quotas.keys():
             continue
-        quota_category = config_categories[category_name]['quota']
+        quota_category = config.quotas[category_name]['quota']
         category_without_qualified = category.general_ranking[quota_category:]
         for rank in category_without_qualified:
             for gymnast in rank:
                 add_mark_for_club(gymnast.club, gymnast.name + ' (' + category_name + ')', config_categories[category_name]['division'], gymnast.total)
 
-    ranking = dict(sorted(COUPE_DES_CLUBS.items(), reverse=True, key=lambda c:c[1].get_result()['total']))
+    return dict(sorted(COUPE_DES_CLUBS.items(), reverse=True, key=lambda c:c[1].get_result()['total']))
 
-    write_results(config['year'], ranking)
+def main(coupe_des_clubs_config_file):
+    config_file_content = json.load(open("./configs/coupe_des_clubs/" + coupe_des_clubs_config_file))
+    config = build_config(coupe_des_clubs_config_file, config_file_content['eventIds'], config_file_content['categories'])
+    print("Config built from input file")
+    event = get_merged_event_results(config)
+    print("Events merged")
+    ranking = compute_cdc_results(event, config)
+    print("Results for coupe de clubs computed")
+
+    write_results(config_file_content['year'], ranking)
 
     print("Finished!")
 

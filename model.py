@@ -5,6 +5,7 @@ class Config:
         self.title = title
         self.ignore_regionals = False
         self.events = dict()
+        self.quotas = {}
 
     def add_event(self, event_title, event_ids):
         for event_id in event_ids.split(','):
